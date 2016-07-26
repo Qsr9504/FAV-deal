@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/footer_bar"
+    android:layout_width="match_parent"
+    android:layout_height="55dp">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/ll_homePage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="4dp">
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:textSize="20sp"
+                android:textColor="@color/footer_normal"
+                android:text="@string/homePage" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/homePageText"
+                android:textColor="@color/footer_normal"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_deliver"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:id="@+id/iv_touzi"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:textSize="20sp"
+                android:textColor="@color/footer_normal"
+                android:text="@string/deliver" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/footer_normal"
+                android:text="@string/deliverText"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+        <!--<com.example.qsr.fav_deal.ui.GooeyMenu-->
+            <!--android:id="@+id/gooey_menu"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--app:fab_radius="@dimen/big_circle_radius"-->
+            <!--app:gap_between_menu_fab="@dimen/min_gap"-->
+            <!--app:menu_radius="@dimen/small_circle_radius"-->
+            <!--app:no_of_menu="5"-->
+            <!--app:menu_drawable="@array/drawable_array"-->
+            <!--android:layout_height="0dp" />-->
+        <LinearLayout
+            android:id="@+id/ll_cart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:textSize="20sp"
+                android:id="@+id/iv_me"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:textColor="@color/footer_normal"
+                android:text="@string/cart" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/footer_normal"
+                android:text="@string/cart_Text"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:textSize="20sp"
+                android:id="@+id/iv_center"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:textColor="@color/footer_normal"
+                android:text="@string/center" />
+            <TextView
+                android:id="@+id/tv_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/centerText"
+                android:textColor="@color/footer_normal"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

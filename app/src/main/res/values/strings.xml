@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">FAV-deal</string>
+    <!-- ************** 底部导航 ****************** -->
+    <string name="homePage">&#xe625;</string>
+    <string name="homePageText">主页</string>
+    <string name="deliver">&#xe611;</string>
+    <string name="deliverText">物流</string>
+    <string name="cart">&#xe660;</string>
+    <string name="cart_Text">购物车</string>
+    <string name="center">&#xe608;</string>
+    <string name="centerText">我的</string>
+
+    <string name="titleBarLeft">&#xe60a;</string>
+    <string name="titleBarRight">我的</string>
 </resources>

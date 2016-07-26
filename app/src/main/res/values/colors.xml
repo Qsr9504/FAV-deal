@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="default_color">#FFD040</color>
+    <color name="default_color_dark">#52a6b8</color>
+    <color name="color_red">#FF0000</color>
+
+    <!--底部导航按钮-->
+    <color name="footer_normal">#CACACA</color>
+    <color name="footer_back">#00f1efef</color>
+    <color name="footer_press">#FFC000</color>
+    <!--顶部导航-->
+    <color name="title_text">#26B8EE</color>
 </resources>

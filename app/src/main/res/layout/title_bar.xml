@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="46dp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_height="45dp">
+        <ImageView
+            android:id="@+id/title_left"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:minWidth="54dp"
+            android:src="@drawable/left"/>
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="首页"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textColor="@color/title_text"
+            />
+        <ImageView
+            android:id="@+id/title_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:minWidth="54dp"
+            android:src="@drawable/my_setting_icon"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/title_text"/>
+
+</LinearLayout>
