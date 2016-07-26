@@ -37,9 +37,9 @@ public abstract class BaseFragment extends Fragment {
 
             @Override
             protected void OnSuccess(ResultState resultState, View successView) {
-                ButterKnife.bind(BaseFragment.this, successView);
+                ButterKnife.bind(BaseFragment.this,successView);
                 initTitle();
-                initData(resultState.getContent());
+                initData(resultState.getContent(),successView);
             }
 
             @Override
@@ -74,7 +74,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int getLayoutId();
 
-    protected abstract void initData(String content);
+    protected abstract void initData(String content, View successView);
 
     protected abstract void initTitle();
 

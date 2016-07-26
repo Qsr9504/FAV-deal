@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="3dp">
+    <RelativeLayout
+        android:layout_marginTop="3dp"
+        android:id="@+id/goodsRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/goodsPic"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:id="@+id/goodsName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/goodsPic"
+            android:text="物品名称"
+            android:textColor="@android:color/background_dark"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/goodsDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/goodsName"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/goodsPic"
+            android:text="闪烁着金光的面包"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/goodsDesc"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/goodsPic"
+            android:layout_alignBottom="@+id/memPrice"
+            android:layout_alignRight="@+id/memPrice"
+            android:background="@drawable/bg_price" />
+
+        <TextView
+            android:id="@+id/memPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/goodsDesc"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/goodsPic"
+            android:textColor="@color/color_red"
+            android:text="会员价￥10.25/份"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/norPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="非会员价: ￥12.9/份"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/goodsPic"
+            android:layout_below="@+id/memPrice"
+            android:layout_alignBottom="@+id/goodsPic"
+            android:textSize="12sp"/>
+        <ImageView
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/goodsPic"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/address_icon"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/dotted_line" />
+</LinearLayout>

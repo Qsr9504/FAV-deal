@@ -52,19 +52,29 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
 
     }
-    @OnClick({R.id.ll_homePage,R.id.ll_deliver,R.id.ll_cart,R.id.ll_center})
+    @OnClick({R.id.ll_homePage,R.id.ll_deliver,R.id.ll_cart,R.id.ll_center
+    ,R.id.home_icon,R.id.home_text,R.id.deliver_icon,R.id.deliver_text,
+    R.id.cart_icon,R.id.cart_text,R.id.center_icon,R.id.center_text})
     public void changeTab(View view){
         switch (view.getId()) {
             case R.id.ll_homePage:
+            case R.id.home_icon:
+            case R.id.home_text:
                 setSelect(0);
                 break;
             case R.id.ll_deliver:
+            case R.id.deliver_icon:
+            case R.id.deliver_text:
                 setSelect(1);
                 break;
             case R.id.ll_cart:
+            case R.id.cart_icon:
+            case R.id.cart_text:
                 setSelect(2);
                 break;
             case R.id.ll_center:
+            case R.id.center_icon:
+            case R.id.center_text:
                 setSelect(3);
                 break;
         }

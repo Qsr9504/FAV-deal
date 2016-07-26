@@ -23,12 +23,14 @@
             android:orientation="vertical"
             android:padding="4dp">
             <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:id="@+id/home_icon"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:textSize="20sp"
                 android:textColor="@color/footer_normal"
                 android:text="@string/homePage" />
             <TextView
+                android:id="@+id/home_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -44,13 +46,14 @@
             android:gravity="center"
             android:orientation="vertical">
             <com.example.qsr.fav_deal.ui.IconFontTextView
-                android:id="@+id/iv_touzi"
+                android:id="@+id/deliver_icon"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:textSize="20sp"
                 android:textColor="@color/footer_normal"
                 android:text="@string/deliver" />
             <TextView
+                android:id="@+id/deliver_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -79,7 +82,7 @@
 
             <com.example.qsr.fav_deal.ui.IconFontTextView
                 android:textSize="20sp"
-                android:id="@+id/iv_me"
+                android:id="@+id/cart_icon"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:textColor="@color/footer_normal"
@@ -91,6 +94,7 @@
                 android:layout_marginTop="2dp"
                 android:textColor="@color/footer_normal"
                 android:text="@string/cart_Text"
+                android:id="@+id/cart_text"
                 android:textSize="14sp" />
         </LinearLayout>
         <LinearLayout
@@ -102,13 +106,13 @@
             android:orientation="vertical">
             <com.example.qsr.fav_deal.ui.IconFontTextView
                 android:textSize="20sp"
-                android:id="@+id/iv_center"
+                android:id="@+id/center_icon"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:textColor="@color/footer_normal"
                 android:text="@string/center" />
             <TextView
-                android:id="@+id/tv_center"
+                android:id="@+id/center_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"

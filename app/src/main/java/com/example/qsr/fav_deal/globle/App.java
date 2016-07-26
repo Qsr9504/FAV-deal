@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import com.example.qsr.fav_deal.utils.LogUtil;
+import com.example.qsr.fav_deal.utils.UIUtils;
+
 /**************************************
  * FileName : com.example.qsr.fav_deal.globle
  * Author : qsr
@@ -30,8 +33,9 @@ public class App extends Application{
      */
     private void initUtils() {
         //log信息是否打印
-        //全局异常捕获处理器
-        AppCrashHandle.getInstance().init(this);
+        LogUtil.openLog(true);
+//        //全局异常捕获处理器
+//        AppCrashHandle.getInstance().init(this);
         //网络切换监听器
     }
 }

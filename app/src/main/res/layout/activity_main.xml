@@ -12,5 +12,4 @@
         android:layout_height="0dp">
     </FrameLayout>
     <include layout="@layout/footer_bar"/>
-
 </LinearLayout>

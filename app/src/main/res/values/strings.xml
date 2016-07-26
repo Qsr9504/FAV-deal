@@ -11,5 +11,11 @@
     <string name="centerText">我的</string>
 
     <string name="titleBarLeft">&#xe60a;</string>
-    <string name="titleBarRight">我的</string>
+    <string name="titleBarRight">&#xe630;</string>
+
+    <string-array name="home_title">
+        <item>水果</item>
+        <item>蔬菜</item>
+        <item>推荐</item>
+    </string-array>
 </resources>

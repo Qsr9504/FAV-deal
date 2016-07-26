@@ -1,5 +1,7 @@
 package com.example.qsr.fav_deal.fragments;
 
+import android.view.View;
+
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.base.BaseFragment;
 import com.loopj.android.http.RequestParams;
@@ -32,7 +34,7 @@ public class CenterFragment extends BaseFragment{
     }
 
     @Override
-    protected void initData(String content) {
+    protected void initData(String content, View successView) {
 
     }
 
