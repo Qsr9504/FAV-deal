@@ -1,6 +1,7 @@
 package com.example.qsr.fav_deal.base;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.PersistableBundle;
@@ -14,6 +15,7 @@ import android.view.Window;
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.bean.ResultState;
 import com.example.qsr.fav_deal.ui.LoadingPage;
+import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.loopj.android.http.RequestParams;
 
 import butterknife.ButterKnife;
@@ -28,7 +30,6 @@ import butterknife.OnClick;
 public abstract class BaseActivity extends FragmentActivity{
     protected Message message;//用于消息发送
     protected Bundle activity_bundle;//用于传递数据使用
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);

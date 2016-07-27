@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.example.qsr.fav_deal.utils.LogUtil;
+import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.example.qsr.fav_deal.utils.UIUtils;
 
 /**************************************
@@ -32,6 +33,8 @@ public class App extends Application{
      * 各种工具类的初始化
      */
     private void initUtils() {
+        //初始化SharedPreferences
+        MySPUtil.getInstance();
         //log信息是否打印
         LogUtil.openLog(true);
 //        //全局异常捕获处理器

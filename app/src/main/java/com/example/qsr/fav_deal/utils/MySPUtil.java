@@ -20,7 +20,7 @@ public class MySPUtil {
     private static MySPUtil mySPUtil = null;
     private static SharedPreferences sp = null;
     private static SharedPreferences.Editor editor;
-    public static SharedPreferences  getInstance(){
+    public static SharedPreferences getInstance(){
         if(sp == null) {
             sp = App.mContext.getSharedPreferences("config", Context.MODE_PRIVATE);
             editor = sp.edit();
@@ -204,7 +204,7 @@ public class MySPUtil {
      * @param value
      * @return
      */
-    public static boolean save( String key, Integer value) {
+    public static boolean save(String key, Integer value) {
         editor.putInt(key, value);
         return editor.commit();
     }

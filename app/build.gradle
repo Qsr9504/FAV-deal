@@ -26,4 +26,7 @@ dependencies {
     compile project(':ViewPagerIndicator')
     compile files('libs/android-async-http-master.jar')
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'//图片加载
+    compile 'com.github.chenupt.android:springindicator:1.0.2@aar'//水滴指示器
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }
