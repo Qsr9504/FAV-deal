@@ -3,9 +3,243 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <include layout="@layout/title_bar"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="个人中心" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:background="@drawable/user_heard_bg">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_launcher" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        >
+        <LinearLayout
+            android:id="@+id/llcenter_2"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#E47D7D"
+                android:textStyle="bold"
+                android:text="@string/center_xianpin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:text="我的鲜拼" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llcenter_1"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/llcenter_2"
+            android:layout_marginRight="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#69C2E2"
+                android:textStyle="bold"
+                android:text="@string/center_myorder" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:text="我的订单" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llcenter_3"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/llcenter_2"
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#F7C734"
+                android:textStyle="bold"
+                android:text="@string/center_member" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:text="我的会员" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llcenter_5"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/llcenter_2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#C781D9"
+                android:textStyle="bold"
+                android:text="@string/center_invite" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:text="邀请好友" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llcenter_4"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/llcenter_5"
+            android:layout_below="@+id/llcenter_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#F48E55"
+                android:textStyle="bold"
+                android:text="@string/center_jifen" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:text="积分商城" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llcenter_6"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/llcenter_5"
+            android:layout_below="@+id/llcenter_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#75ACEB"
+                android:textStyle="bold"
+                android:text="@string/center_joinus" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:text="加入联盟" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:layout_weight="2"
+        android:background="@drawable/rect_corners"
+        android:gravity="center_vertical">
+
+        <com.example.qsr.fav_deal.ui.IconFontTextView
+            android:id="@+id/phone"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="@string/phone"
+            android:textColor="#FFD04F"
+            android:textSize="34sp" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/phone"
+            android:layout_toRightOf="@+id/phone"
+            android:text="联系我们:"
+            android:id="@+id/contact"
+            android:textColor="#FFD04F"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/phone"
+            android:layout_below="@+id/contact"
+            android:text="400-620-0113"
+            android:textColor="#FFD04F"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 </LinearLayout>

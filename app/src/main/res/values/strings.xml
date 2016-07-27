@@ -13,6 +13,15 @@
     <string name="titleBarLeft">&#xe60a;</string>
     <string name="titleBarRight">&#xe630;</string>
 
+    <string name="phone">&#xe667;</string>
+
+    <string name="center_myorder">&#xe64b;</string>
+    <string name="center_xianpin">&#xe62f;</string>
+    <string name="center_member">&#xe608;</string>
+    <string name="center_invite">&#xe684;</string>
+    <string name="center_jifen">&#xe629;</string>
+    <string name="center_joinus">&#xe603;</string>
+
     <string-array name="home_title">
         <item>水果</item>
         <item>蔬菜</item>
