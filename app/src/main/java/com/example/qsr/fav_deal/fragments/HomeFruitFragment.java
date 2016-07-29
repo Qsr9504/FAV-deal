@@ -1,6 +1,9 @@
 package com.example.qsr.fav_deal.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,12 +11,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.qsr.fav_deal.R;
+import com.example.qsr.fav_deal.activities.GoodsDetailActivity;
+import com.example.qsr.fav_deal.adapter.HomeListAdapter;
 import com.example.qsr.fav_deal.adapter.MyRecyclerViewAdapter;
+import com.example.qsr.fav_deal.base.BaseFragment;
 import com.example.qsr.fav_deal.bean.Goods;
+import com.example.qsr.fav_deal.globle.App;
+import com.example.qsr.fav_deal.globle.AppNetConfig;
+import com.example.qsr.fav_deal.utils.LogUtil;
 import com.example.qsr.fav_deal.utils.UIUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,28 +41,78 @@ import butterknife.ButterKnife;
  * Time : 2016/7/26 16:57
  * Description : 水果列表
  **************************************/
-public class HomeFruitFragment extends Fragment {
+public class HomeFruitFragment extends BaseFragment {
     private List<Goods> goodsList = new ArrayList<Goods>();
-    @Bind(R.id.fruit_recyclerView)
-    RecyclerView fruitRecyclerView;
-
-    @Nullable
+    private Intent intent;
+    @Bind(R.id.fruit_listView)
+    ListView fruit_listView;
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = UIUtils.getXmlView(R.layout.fragment_home_fruit);
-        ButterKnife.bind(this, view);
-        initData();
-        MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(getContext(),goodsList) {
+    protected void initEvent() {
+
+    }
+
+    @Override
+    protected RequestParams getParams() {
+        return new RequestParams();
+    }
+
+    @Override
+    protected String getUrl() {
+        return "";
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_home_fruit;
+    }
+
+    @Override
+    protected void initData(String content, View successView) {
+        LogUtil.MyLog_e(getContext(),content);
+//        Gson gson = new Gson();
+//        goodsList = gson.fromJson(content,new TypeToken<List<Goods>>(){}.getType());
+        initData();//用于没有网络的时候死数据
+
+//        MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(getContext(),goodsList) {
+//            @Override
+//            public void addBtnClick(View v, Goods goods) {
+//                Toast.makeText(getContext(),goods.toString(),Toast.LENGTH_SHORT).show();
+//                intent = new Intent(getContext(),GoodsDetailActivity.class);
+//                startActivity(intent);
+//            }
+//
+//            @Override
+//            public void item_LLClick(View v, Goods goods) {
+//            }
+//        };
+//        fruitRecyclerView.setAdapter(adapter);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+//        fruitRecyclerView.setLayoutManager(linearLayoutManager);
+
+        HomeListAdapter adapter = new HomeListAdapter(getContext(),goodsList) {
             @Override
             public void addBtnClick(View v, Goods goods) {
+                //添加至购物车操作
                 Toast.makeText(getContext(),goods.toString(),Toast.LENGTH_SHORT).show();
             }
         };
-        fruitRecyclerView.setAdapter(adapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
-        fruitRecyclerView.setLayoutManager(linearLayoutManager);
+        fruit_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(view.getContext(),goodsList.get(position).toString(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(),GoodsDetailActivity.class);
+                bundle.putSerializable("good",goodsList.get(position));
+                intent.putExtra("fruit_detail",bundle);
+                startActivity(intent);
+            }
+        });
+        fruit_listView.setAdapter(adapter);
 
-        return view;
+    }
+
+    @Override
+    protected void initTitle() {
+
     }
 
     private void initData() {
@@ -75,9 +139,4 @@ public class HomeFruitFragment extends Fragment {
         goodsList.add(goods10);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
 }

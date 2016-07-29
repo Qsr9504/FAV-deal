@@ -1,14 +1,17 @@
 package com.example.qsr.fav_deal.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.qsr.fav_deal.R;
+import com.example.qsr.fav_deal.activities.GoodsDetailActivity;
 import com.example.qsr.fav_deal.bean.Goods;
 import com.example.qsr.fav_deal.globle.App;
 import com.squareup.picasso.Picasso;
@@ -23,11 +26,13 @@ import butterknife.Bind;
  * Time : 2016/7/29 0:07
  * Description : recyclerView 适配器
  **************************************/
-public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder>{
+public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private Context context;
     private LayoutInflater inflater;
     private List<Goods> goodsList;
-    public MyRecyclerViewAdapter(Context context,List<Goods> goodsList) {
+    private View.OnClickListener onClickListener = null;
+
+    public MyRecyclerViewAdapter(Context context, List<Goods> goodsList) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.goodsList = goodsList;
@@ -35,7 +40,7 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyViewH
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = inflater.inflate(R.layout.item_goods,viewGroup,false);
+        View view = inflater.inflate(R.layout.item_goods, viewGroup, false);
         MyViewHolder viewHolder = new MyViewHolder(view);
         return viewHolder;
     }
@@ -43,7 +48,17 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyViewH
     @Override
     public void onBindViewHolder(MyViewHolder viewHolder, final int i) {
         final Goods goods = goodsList.get(i);
-        Picasso.with(context).load(R.drawable.demo4).placeholder(R.drawable.demo4).resize(150,100).centerCrop()
+        onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.btn_add:
+//                        addBtnClick(v, goods);
+                        break;
+                }
+            }
+        };
+        Picasso.with(context).load(R.drawable.demo4).placeholder(R.drawable.demo4).resize(150, 100).centerCrop()
                 .into(viewHolder.goodsPic);
         viewHolder.goodsName.setText(goods.getG_name());
         viewHolder.goodsDesc.setText(goods.getG_desc());
@@ -52,7 +67,8 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyViewH
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addBtnClick(v,goods);
+//                addBtnClick(v,goods);
+                context.startActivity(new Intent(context, GoodsDetailActivity.class));
             }
         });
     }
@@ -61,9 +77,13 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyViewH
     public int getItemCount() {
         return goodsList.size();
     }
-    public abstract void addBtnClick(View v,Goods goods);
+
+//    public abstract void addBtnClick(View v, Goods goods);//每一个按钮的监听事件
+//
+//    public abstract void item_LLClick(View v, Goods goods);//每一个item的监听事件
 }
-class MyViewHolder extends RecyclerView.ViewHolder{
+
+class MyViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.goodsPic)
     ImageView goodsPic;
     @Bind(R.id.goodsName)
@@ -76,6 +96,7 @@ class MyViewHolder extends RecyclerView.ViewHolder{
     TextView norPrice;
     @Bind(R.id.btn_add)
     ImageView btnAdd;
+
     public MyViewHolder(View itemView) {
         super(itemView);
         goodsPic = (ImageView) itemView.findViewById(R.id.goodsPic);

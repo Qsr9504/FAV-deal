@@ -59,18 +59,18 @@ public abstract class HomeListAdapter extends BaseAdapter {
         }
         //设置数据
 
-//        Picasso.with(context).load(goods.getPicUrl()).placeholder(R.drawable.demo4).resize(150,100).centerCrop()
-//                .into(viewHolder.goodsPic);
-//        viewHolder.goodsName.setText(goods.getGoodsName());
-//        viewHolder.goodsDesc.setText(goods.getGoodsDesc());
-//        viewHolder.memPrice.setText("会员价:￥" + goods.getMem_price() + "/份");
-//        viewHolder.norPrice.setText("非会员价:￥" + goods.getPrice() + "/份");
-//        viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                addBtnClick(v,goods);
-//            }
-//        });
+        Picasso.with(context).load(R.drawable.demo4).placeholder(R.drawable.demo4).resize(150,100).centerCrop()
+                .into(viewHolder.goodsPic);
+        viewHolder.goodsName.setText(goods.getG_name());
+        viewHolder.goodsDesc.setText(goods.getG_desc());
+        viewHolder.memPrice.setText("会员价:￥" + goods.getMemb_price() + "/份");
+        viewHolder.norPrice.setText("非会员价:￥" + goods.getPrice() + "/份");
+        viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBtnClick(v,goods);
+            }
+        });
         return convertView;
     }
 
@@ -87,8 +87,6 @@ public abstract class HomeListAdapter extends BaseAdapter {
         TextView norPrice;
         @Bind(R.id.btn_add)
         ImageView btnAdd;
-        @Bind(R.id.goodsRelativeLayout)
-        RelativeLayout goodsRelativeLayout;
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

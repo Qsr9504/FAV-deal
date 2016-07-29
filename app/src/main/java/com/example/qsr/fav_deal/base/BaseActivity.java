@@ -16,6 +16,7 @@ import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.bean.ResultState;
 import com.example.qsr.fav_deal.ui.LoadingPage;
 import com.example.qsr.fav_deal.utils.MySPUtil;
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
 import butterknife.ButterKnife;
@@ -41,6 +42,7 @@ public abstract class BaseActivity extends FragmentActivity{
         initView();
         initData();
     }
+
     protected abstract int getLayoutId();
 
     protected abstract void initData();

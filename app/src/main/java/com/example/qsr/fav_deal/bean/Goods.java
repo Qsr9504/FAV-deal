@@ -1,12 +1,14 @@
 package com.example.qsr.fav_deal.bean;
 
+import java.io.Serializable;
+
 /**************************************
  * FileName : com.example.qsr.fav_deal.bean
  * Author : qsr
  * Time : 2016/7/28 16:34
  * Description : 商品详情
  **************************************/
-public class Goods {
+public class Goods implements Serializable {
     private int g_id;//唯一标示
     private String g_name;//商品名称
     private String g_pic; //商品图片url地址

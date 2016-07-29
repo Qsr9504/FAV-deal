@@ -1,6 +1,7 @@
 package com.example.qsr.fav_deal.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
  **************************************/
 public abstract class BaseFragment extends Fragment {
     private LoadingPage loadingPage;
+    protected Bundle bundle = new Bundle();
     //声明加载界面
     @Nullable
     @Override

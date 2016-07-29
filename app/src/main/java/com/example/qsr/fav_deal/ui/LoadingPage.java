@@ -6,9 +6,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.bean.ResultState;
+import com.example.qsr.fav_deal.globle.App;
 import com.example.qsr.fav_deal.utils.LogUtil;
 import com.example.qsr.fav_deal.utils.UIUtils;
 import com.loopj.android.http.AsyncHttpClient;
@@ -21,7 +23,7 @@ import com.loopj.android.http.RequestParams;
  * Time : 2016/7/26 11:57
  * Description : 数据加载中间界面
  **************************************/
-public abstract class LoadingPage extends FrameLayout{
+public abstract class LoadingPage extends FrameLayout implements View.OnClickListener{
     private static final int PAGE_LOADING_STATE = 1;
     private static final int PAGE_ERROR_STATE = 2;
     private static final int PAGE_EMPTY_STATE = 3;
@@ -37,6 +39,9 @@ public abstract class LoadingPage extends FrameLayout{
     public ResultState resultState = new ResultState();
     AsyncHttpClient client = new AsyncHttpClient();
     private MyAsyncHttpResponseHandler myAsyncHttpResponseHandler = new MyAsyncHttpResponseHandler();
+
+    private ImageView try_againImage;
+
     public LoadingPage(Context context) {
         this(context,null);
     }
@@ -48,6 +53,9 @@ public abstract class LoadingPage extends FrameLayout{
     public LoadingPage(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mConext = context;//获取fragment布局中的上下文对象
+        View view = View.inflate(mConext,R.layout.page_error,null);
+        try_againImage = (ImageView) view.findViewById(R.id.try_again);
+        try_againImage.setOnClickListener(this);
         init();
     }
 
@@ -127,6 +135,8 @@ public abstract class LoadingPage extends FrameLayout{
             error.printStackTrace();
             resultState.setState(PAGE_ERROR_STATE);
             resultState.setContent("");
+            LogUtil.MyLog_e(App.mContext,"网络访问错误返回"  + "---\n---" + content);
+            error.printStackTrace();
             loadPage();
         }
     }
@@ -165,4 +175,9 @@ public abstract class LoadingPage extends FrameLayout{
      * @return
      */
     protected abstract String url();
+
+    @Override
+    public void onClick(View v) {
+        init();
+    }
 }
