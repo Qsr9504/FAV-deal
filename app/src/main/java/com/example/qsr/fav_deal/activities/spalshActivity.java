@@ -45,6 +45,7 @@ public class SpalshActivity extends Activity implements View.OnClickListener {
     protected static final int URL_ERROR = 102;
     protected static final int IO_ERROR = 103;
     protected static final int JSON_ERROR = 104;
+    private boolean flag = true;
     @Bind(R.id.spalsh)
     RelativeLayout spalsh;
     private int currentVersionCode;
@@ -60,7 +61,8 @@ public class SpalshActivity extends Activity implements View.OnClickListener {
                     break;
                 case ENTER_HOME:
                     //进入应用程序主界面,activity跳转过程
-                    enterHome();
+                    if(flag)//判断用户是否已经点击了屏幕
+                        enterHome();
                     break;
                 case URL_ERROR:
                     Toast.makeText(getApplicationContext(), "url异常", Toast.LENGTH_SHORT).show();
@@ -80,6 +82,7 @@ public class SpalshActivity extends Activity implements View.OnClickListener {
     };
 
     private void enterHome() {
+
         Intent intent;
         //判断是否第一次进入app
         if (!MySPUtil.getBoolean(AppConstants.CONFIG.IS_GUIDE)) {
@@ -88,6 +91,7 @@ public class SpalshActivity extends Activity implements View.OnClickListener {
             intent = new Intent(this, MainActivity.class);
         }
         startActivity(intent);
+        flag = false;
         //在开启一个新的界面后,将导航界面关闭(导航界面只可见一次)
         finish();
     }
@@ -104,6 +108,7 @@ public class SpalshActivity extends Activity implements View.OnClickListener {
     private void initData() {
         //判断用户是否开启版本更新检测
         if (MySPUtil.getBoolean(AppConstants.CONFIG.OPEN_UPDATE)) {//默认不开启
+//        if (true){//测试使用
             LogUtil.MyLog_e(SpalshActivity.this, "进入版本检测");
             checkVersion();
         } else {
@@ -125,15 +130,16 @@ public class SpalshActivity extends Activity implements View.OnClickListener {
                 JSONObject jsonObject = null;
                 message = handler.obtainMessage();
                 try {
-                    jsonObject = new JSONObject(content);
-                    //debug调试,解决问题
-                    String versionName = jsonObject.getString("versionName");//版本名称
-                    int versionCode = jsonObject.getInt("versionCode");//版本号
-                    mDownloadUrl = jsonObject.getString("downloadUrl");//新版本下载地址
-                    if (versionCode > currentVersionCode) {//检测当前版本是否小于网络版本
+                    LogUtil.MyLog_e(SpalshActivity.this,"服务器返回：" + content);
+//                    jsonObject = new JSONObject(content);
+//                    //debug调试,解决问题
+//                    String versionName = jsonObject.getString("versionName");//版本名称
+//                    int versionCode = jsonObject.getInt("versionCode");//版本号
+//                    mDownloadUrl = jsonObject.getString("downloadUrl");//新版本下载地址
+//                    if (versionCode > currentVersionCode) {//检测当前版本是否小于网络版本
                         message.what = UPDATE_VERSION;
-                    }
-                } catch (JSONException e) {
+//                    }
+                } catch (Exception e) {
                     message.what = JSON_ERROR;
                 }
                 handler.sendMessage(message);
@@ -184,8 +190,8 @@ public class SpalshActivity extends Activity implements View.OnClickListener {
                 dialog.dismiss();
             }
         });
-
-        builder.show();
+        if(flag)
+            builder.show();
     }
 
     @Override
