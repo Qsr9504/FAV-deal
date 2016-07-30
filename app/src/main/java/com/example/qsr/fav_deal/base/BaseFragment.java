@@ -15,6 +15,8 @@ import com.example.qsr.fav_deal.ui.LoadingPage;
 import com.example.qsr.fav_deal.utils.UIUtils;
 import com.loopj.android.http.RequestParams;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 
 /**************************************

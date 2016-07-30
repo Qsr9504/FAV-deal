@@ -1,4 +1,4 @@
-package com.example.qsr.fav_deal.adapter;
+package com.example.qsr.fav_deal.recycler;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.activities.GoodsDetailActivity;
 import com.example.qsr.fav_deal.bean.Goods;
-import com.example.qsr.fav_deal.globle.App;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

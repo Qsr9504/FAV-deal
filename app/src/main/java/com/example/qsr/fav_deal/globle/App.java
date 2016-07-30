@@ -4,9 +4,12 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import com.example.qsr.fav_deal.BuildConfig;
 import com.example.qsr.fav_deal.utils.LogUtil;
 import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.example.qsr.fav_deal.utils.UIUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**************************************
  * FileName : com.example.qsr.fav_deal.globle
@@ -33,6 +36,7 @@ public class App extends Application{
      * 各种工具类的初始化
      */
     private void initUtils() {
+        EventBus eventBus=EventBus.builder().throwSubscriberException(BuildConfig.DEBUG).build();
         //初始化SharedPreferences
         MySPUtil.getInstance();
         //log信息是否打印

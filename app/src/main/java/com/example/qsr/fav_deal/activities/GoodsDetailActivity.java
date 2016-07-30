@@ -8,9 +8,15 @@ import android.widget.TextView;
 
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.bean.Goods;
+import com.example.qsr.fav_deal.bean.MessageEvent;
+import com.example.qsr.fav_deal.bean.ShowGoods;
 import com.example.qsr.fav_deal.utils.LogUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,7 +24,6 @@ import butterknife.ButterKnife;
 public class GoodsDetailActivity extends Activity {
     @Bind(R.id.goods_pic)
     ImageView goodsPic;
-    @Bind(R.id.goods_name)
     TextView goodsName;
     @Bind(R.id.goods_desc)
     TextView goodsDesc;
@@ -35,14 +40,24 @@ public class GoodsDetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
+        goodsName = (TextView) findViewById(R.id.goods_name);
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this);
-        Bundle bundle = this.getIntent().getBundleExtra("fruit_detail");
-        goods = (Goods) bundle.getSerializable("good");
-        LogUtil.MyLog_e(this, goods.getG_desc());
-        Picasso.with(this).load(R.drawable.demo4).into(goodsPic);
-        goodsDesc.setText(goods.getG_desc());
-        goodsName.setText(goods.getG_name());
-        memPrice.setText("会员价:" + goods.getMemb_price() + "/份");
-        norPrice.setText("非会员价" + goods.getPrice() + "/份");
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(MessageEvent  messageEvent) {
+        String str = messageEvent.getString();
+        goodsName.setText(str);
+        LogUtil.MyLog_e(this,"---" + str);
+    }
+
+    private void initData() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.qsr.fav_deal.adapter;
+package com.example.qsr.fav_deal.recycler;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;

@@ -1,29 +1,19 @@
 package com.example.qsr.fav_deal.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qsr.fav_deal.MainActivity;
 import com.example.qsr.fav_deal.R;
-import com.example.qsr.fav_deal.adapter.GuidePagerAdapter;
+import com.example.qsr.fav_deal.recycler.GuidePagerAdapter;
 import com.example.qsr.fav_deal.globle.AppConstants;
 import com.example.qsr.fav_deal.utils.MySPUtil;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;

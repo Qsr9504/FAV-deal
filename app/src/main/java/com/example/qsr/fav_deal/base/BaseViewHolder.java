@@ -6,7 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.qsr.fav_deal.adapter.OnRecyclerViewListener;
+import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
+import com.example.qsr.fav_deal.utils.LogUtil;
 
 import butterknife.ButterKnife;
 
@@ -17,7 +18,7 @@ import butterknife.ButterKnife;
  * Description : ViewHolder的基类适配器（携带监听事件）
  **************************************/
 public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
-    private OnRecyclerViewListener onRecyclerViewListener;//声明点击事件接口
+    protected OnRecyclerViewListener onRecyclerViewListener;//声明点击事件接口
     protected Context context;//声明上下文对象
 
     public BaseViewHolder(Context context,OnRecyclerViewListener onRecyclerViewListener, ViewGroup root, int layoutRes) {
@@ -25,6 +26,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder implemen
         this.onRecyclerViewListener = onRecyclerViewListener;
         this.context = context;
         ButterKnife.bind(this, itemView);
+        //将适配器中的接口对象传递给holder使用
         this.onRecyclerViewListener = onRecyclerViewListener;
     }
 
@@ -37,6 +39,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder implemen
     @Override
     public void onClick(View v) {
         if(onRecyclerViewListener!=null){
+            LogUtil.MyLog_e(context,"进来了抽象holder点击事件");
             onRecyclerViewListener.onItemClick(getAdapterPosition());
         }
     }

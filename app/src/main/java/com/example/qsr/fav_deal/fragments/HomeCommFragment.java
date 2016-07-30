@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.qsr.fav_deal.R;
-import com.example.qsr.fav_deal.adapter.HomeListAdapter;
 import com.example.qsr.fav_deal.bean.Goods;
 import com.example.qsr.fav_deal.ui.randomLayout.StellarMap;
 import com.example.qsr.fav_deal.utils.UIUtils;
