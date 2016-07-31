@@ -25,4 +25,21 @@ public class ShowGoods extends Goods{
 
     public ShowGoods() {
     }
+    public CartGoods showGoodsToCartGoods(ShowGoods showGoods){
+        CartGoods cartGoods = new CartGoods();
+        cartGoods.setG_id(showGoods.getG_id());
+        cartGoods.setG_name(showGoods.getG_name());
+        cartGoods.setG_desc(showGoods.getG_desc());
+        cartGoods.setG_pic(showGoods.getG_pic());
+        cartGoods.setG_pic_big(showGoods.getG_pic_big());
+        cartGoods.setMemb_price(showGoods.getMemb_price());
+        cartGoods.setPrice(showGoods.getPrice());
+        cartGoods.setG_repertory(showGoods.getG_repertory());
+        cartGoods.setG_sales(showGoods.getG_sales());
+        cartGoods.setG_type(showGoods.getG_type());
+        cartGoods.setG_detail(showGoods.getG_detail());
+        cartGoods.setG_detailUrl(showGoods.getG_detailUrl());
+        cartGoods.setCount(1);
+        return cartGoods;
+    }
 }

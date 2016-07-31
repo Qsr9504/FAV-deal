@@ -11,8 +11,17 @@ import java.util.Objects;
  * Description : EventBus使用
  **************************************/
 public class MessageEvent {
-   private String string;
+    private String string;
 
+    private Object object;
+
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
     public String getString() {
         return string;
     }

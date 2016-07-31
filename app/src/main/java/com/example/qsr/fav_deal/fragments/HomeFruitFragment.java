@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.activities.GoodsDetailActivity;
 import com.example.qsr.fav_deal.base.BaseFragment;
+import com.example.qsr.fav_deal.bean.CartGoods;
 import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.bean.ShowGoods;
 import com.example.qsr.fav_deal.globle.AppManager;
@@ -119,6 +120,8 @@ public class HomeFruitFragment extends BaseFragment {
             @Override
             public void onAddBtn(int position) {
                 Toast.makeText(getContext(), "点击了添加按钮" + position, Toast.LENGTH_SHORT).show();
+                addToCart(goodsList.get(position));
+                //添加 按钮的飞入购物车动画效果
             }
 
             @Override
@@ -161,6 +164,15 @@ public class HomeFruitFragment extends BaseFragment {
         goodsList.add(goods10);
     }
 
+    /**
+     * 添加条目数据到购物车
+     */
+    public void addToCart(ShowGoods showGoods) {
+        CartGoods cartGoods = showGoods.showGoodsToCartGoods(showGoods);
+        MessageEvent event = new MessageEvent();
+        event.setObject(cartGoods);
+        EventBus.getDefault().post(event);
+    }
 
     @Override
     public void onDestroyView() {

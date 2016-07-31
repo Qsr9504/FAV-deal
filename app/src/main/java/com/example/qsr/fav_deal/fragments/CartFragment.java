@@ -21,6 +21,7 @@ import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.activities.CartDetailActivity;
 import com.example.qsr.fav_deal.base.BaseFragment;
 import com.example.qsr.fav_deal.bean.CartGoods;
+import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.globle.AppConstants;
 import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
 import com.example.qsr.fav_deal.recycler.adapter.CartAdapter;
@@ -29,6 +30,11 @@ import com.example.qsr.fav_deal.utils.LogUtil;
 import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.loopj.android.http.RequestParams;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.security.PolicySpi;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +103,7 @@ public class CartFragment extends BaseFragment {
 
     @Override
     protected void initData(String content, View successView) {
+        EventBus.getDefault().register(this);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,6 +159,32 @@ public class CartFragment extends BaseFragment {
     protected void initTitle() {
 
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void addCart(MessageEvent event){
+        CartGoods cartGoods = (CartGoods) event.getObject();
+        int flag = isExit(cartGoods.getG_id());
+        //判断购物车是否已经存在
+        if(flag == -1){//购物车中不存在
+            goodsList.add(cartGoods);
+        }else {//购物车中存在
+            goodsList.get(flag).setCount(goodsList.get(flag).getCount()+1);
+        }
+        adapter.notifyDataSetChanged();
+        Toast.makeText(getContext(), "添加购物车成功", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 判断购物车中是否已经存在该物品
+     * @param id
+     * @return
+     */
+    private int isExit(int id) {
+        for(int i = 0; i<goodsList.size();i++){
+            if(goodsList.get(i).getG_id() == id)
+                return i;//说明购物车中已经存在
+        }
+        return -1;
+    }
 
     private void initD() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -204,10 +237,10 @@ public class CartFragment extends BaseFragment {
         discount.setText("原价总计:￥" + 0.00 + " " + "优惠 :￥" + 0.00);
         if(goodsList != null){
             for (CartGoods g : goodsList) {
-                sMoney += (Double.parseDouble(g.getPrice()) * g.getCount());
+                sMoney += (Double.parseDouble(g.getMemb_price()) * g.getCount());
             }
             for (CartGoods ori : goodsList) {
-                oriMoney += (Double.parseDouble(ori.getMemb_price()) * ori.getCount());
+                oriMoney += (Double.parseDouble(ori.getPrice()) * ori.getCount());
             }
             sumMoney.setText("实付:￥" + meg(sMoney));
             discount.setText("原价总计:￥" + meg(oriMoney) + " " + "优惠 :￥" + meg(oriMoney - sMoney));
@@ -227,15 +260,15 @@ public class CartFragment extends BaseFragment {
         TextView tvDel = (TextView) pv.findViewById(R.id.pv_tv_del);
 
         pw.setWidth(getActivity().getWindowManager().getDefaultDisplay().getWidth() / 5);
-        pw.setHeight(100);
+        pw.setHeight(120);
 
         pw.setOutsideTouchable(true);
         pw.setFocusable(true);
         DisplayMetrics dm = getResources().getDisplayMetrics();
         pw.showAtLocation(v,
                 Gravity.LEFT | Gravity.TOP,
-                getActivity().getWindowManager().getDefaultDisplay().getWidth() / 4,
-                getStateBar() + v.getHeight() * (position + 1));
+                v.getWidth() / 3,
+                getStateBar() + v.getHeight() * (position + 1) - (v.getHeight()/3));
 
         tvDel.setOnClickListener(new View.OnClickListener() {
             @Override
