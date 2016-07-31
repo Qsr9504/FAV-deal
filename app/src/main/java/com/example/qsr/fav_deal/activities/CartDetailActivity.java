@@ -9,14 +9,13 @@ import android.widget.TextView;
 
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.bean.CartGoods;
-import com.example.qsr.fav_deal.bean.ShowGoods;
 import com.loopj.android.http.AsyncHttpClient;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class GoodsDetailActivity extends Activity {
+public class CartDetailActivity extends Activity {
     @Bind(R.id.goods_pic)
     ImageView goodsPic;
     @Bind(R.id.goods_name)
@@ -29,7 +28,7 @@ public class GoodsDetailActivity extends Activity {
     TextView norPrice;
     @Bind(R.id.goods_detailsList)
     RecyclerView goodsDetailsList;
-    private ShowGoods goods = new ShowGoods();
+    private CartGoods goods = new CartGoods();
     private AsyncHttpClient client = new AsyncHttpClient();
 
     @Override
@@ -38,13 +37,13 @@ public class GoodsDetailActivity extends Activity {
         setContentView(R.layout.activity_goods_detail);
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("showBundle");
-        goods = (ShowGoods) bundle.getSerializable("showGoods");
+        Bundle bundle = intent.getBundleExtra("cartBundle");
+        goods = (CartGoods) bundle.getSerializable("cartGoods");
         initData();
     }
 
     private void initData() {
-        Picasso.with(GoodsDetailActivity.this).load(R.drawable.demo3).into(goodsPic);
+        Picasso.with(CartDetailActivity.this).load(R.drawable.demo3).into(goodsPic);
         goodsName.setText(goods.getG_name());
         goodsDesc.setText(goods.getG_desc());
         memPrice.setText("会员价:" + goods.getMemb_price() + "￥/份");

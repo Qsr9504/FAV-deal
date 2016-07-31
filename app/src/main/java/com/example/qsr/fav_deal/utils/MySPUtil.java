@@ -2,13 +2,24 @@ package com.example.qsr.fav_deal.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.util.Base64;
+import android.widget.Toast;
 
+import com.example.qsr.fav_deal.bean.CartGoods;
+import com.example.qsr.fav_deal.bean.Goods;
 import com.example.qsr.fav_deal.globle.App;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**************************************
  * FileName : com.example.qsr.fav_deal.utils
@@ -20,16 +31,20 @@ public class MySPUtil {
     private static MySPUtil mySPUtil = null;
     private static SharedPreferences sp = null;
     private static SharedPreferences.Editor editor;
-    public static SharedPreferences getInstance(){
-        if(sp == null) {
+    private static Gson gson;
+
+    public static SharedPreferences getInstance() {
+        if (sp == null) {
             sp = App.mContext.getSharedPreferences("config", Context.MODE_PRIVATE);
             editor = sp.edit();
+            gson = new Gson();
         }
         return sp;
     }
 
     /**
      * 清除方法
+     *
      * @return
      */
     public static boolean clear() {
@@ -39,6 +54,7 @@ public class MySPUtil {
 
     /**
      * 判断包含
+     *
      * @param key
      * @return
      */
@@ -48,6 +64,7 @@ public class MySPUtil {
 
     /**
      * 取布尔值
+     *
      * @param key
      * @return
      */
@@ -57,6 +74,7 @@ public class MySPUtil {
 
     /**
      * 取布尔值，带默认值
+     *
      * @param key
      * @param defVal
      * @return
@@ -67,6 +85,7 @@ public class MySPUtil {
 
     /**
      * 取整型
+     *
      * @param key
      * @return
      */
@@ -76,6 +95,7 @@ public class MySPUtil {
 
     /**
      * 取整型，带默认值
+     *
      * @param key
      * @param defVal
      * @return
@@ -86,6 +106,7 @@ public class MySPUtil {
 
     /**
      * 取长整型
+     *
      * @param key
      * @return
      */
@@ -95,6 +116,7 @@ public class MySPUtil {
 
     /**
      * 取长整型，带默认值
+     *
      * @param key
      * @param defVal
      * @return
@@ -105,6 +127,7 @@ public class MySPUtil {
 
     /**
      * 取浮点型
+     *
      * @param key
      * @return
      */
@@ -114,6 +137,7 @@ public class MySPUtil {
 
     /**
      * 取浮点型，带默认值
+     *
      * @param key
      * @param defVal
      * @return
@@ -124,6 +148,7 @@ public class MySPUtil {
 
     /**
      * 取字符串
+     *
      * @param key
      * @return
      */
@@ -133,6 +158,7 @@ public class MySPUtil {
 
     /**
      * 取字符串，带默认值
+     *
      * @param key
      * @param defVal
      * @return
@@ -140,16 +166,31 @@ public class MySPUtil {
     public static String getString(String key, String defVal) {
         return sp.getString(key, defVal);
     }
-
+    // 解析成CartGoods集合
+    public static List<CartGoods> getCartGoodsJson(String key) {
+        try {
+            String json = sp.getString(key,"");
+            List<CartGoods> goodsList = gson.fromJson(json, new TypeToken<List<CartGoods>>() {}.getType());
+            if(goodsList == null)
+                return new ArrayList<CartGoods>();
+            else
+                return goodsList;
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(App.mContext,"获取本地数据出现解析错误，报错位置为spUtils里边",Toast.LENGTH_SHORT).show();
+        }
+        return new ArrayList<CartGoods>();
+    }
 
     /**
      * 获取序列化对象
+     *
      * @param key
      * @return
      */
     public static Serializable getSerializable(String key) {
-        String str = getString(key,"");
-        if(TextUtil.isEmpty(str)) {
+        String str = getString(key, "");
+        if (TextUtil.isEmpty(str)) {
             return null;
         }
         // 解析对象字符串
@@ -168,6 +209,7 @@ public class MySPUtil {
 
     /**
      * 移除对象
+     *
      * @param key
      * @return
      */
@@ -178,6 +220,7 @@ public class MySPUtil {
 
     /**
      * 移除多个对象
+     *
      * @return
      */
     public static boolean removeKeys(String[] keys) {
@@ -189,6 +232,7 @@ public class MySPUtil {
 
     /**
      * 保存布尔类型
+     *
      * @param key
      * @param value
      * @return
@@ -200,6 +244,7 @@ public class MySPUtil {
 
     /**
      * 保存整型
+     *
      * @param key
      * @param value
      * @return
@@ -211,6 +256,7 @@ public class MySPUtil {
 
     /**
      * 保存长整型
+     *
      * @param key
      * @param value
      * @return
@@ -222,6 +268,7 @@ public class MySPUtil {
 
     /**
      * 保存浮点类型
+     *
      * @param key
      * @param value
      * @return
@@ -233,6 +280,7 @@ public class MySPUtil {
 
     /**
      * 保存字符串
+     *
      * @param key
      * @param value
      * @return
@@ -245,16 +293,23 @@ public class MySPUtil {
     // 保存序列化对象
 
     public static boolean save(String key, Object value) {
-        if(value instanceof Integer)
-            return save(key, (Integer)value);
-        if(value instanceof Long)
-            return save(key, (Long)value);
-        if(value instanceof Float)
-            return save(key, (Float)value);
-        if(value instanceof Boolean)
-            return save(key, (Boolean)value);
-        if(value instanceof String)
-            return save(key, (String)value);
+        if (value instanceof Integer)
+            return save(key, (Integer) value);
+        if (value instanceof Long)
+            return save(key, (Long) value);
+        if (value instanceof Float)
+            return save(key, (Float) value);
+        if (value instanceof Boolean)
+            return save(key, (Boolean) value);
+        if (value instanceof String)
+            return save(key, (String) value);
         return false;
+    }
+
+    // 保存成CartGoodsjson形式
+    public static boolean saveCartGoods(String key, List<CartGoods> obj) {
+        String json = gson.toJson(obj);
+        editor.putString(key, json);
+        return editor.commit();
     }
 }

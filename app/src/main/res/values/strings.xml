@@ -22,6 +22,10 @@
     <string name="center_jifen">&#xe629;</string>
     <string name="center_joinus">&#xe603;</string>
 
+
+    <string name="edit">&#xe615;</string>
+    <string name="cancle">&#xe673;</string>
+
     <string-array name="home_title">
         <item>水果</item>
         <item>蔬菜</item>

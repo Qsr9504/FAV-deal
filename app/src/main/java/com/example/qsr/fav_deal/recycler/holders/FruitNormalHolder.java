@@ -84,7 +84,7 @@ public class FruitNormalHolder extends BaseViewHolder<Goods> {
             @Override
             public boolean onLongClick(View v) {
                 if (onRecyclerViewListener != null) {
-                    onRecyclerViewListener.onItemLongClick(getAdapterPosition());
+                    onRecyclerViewListener.onItemLongClick(v,getAdapterPosition());
                 }
                 return true;
             }

@@ -21,5 +21,6 @@ public class AppConstants {
        final String IS_GUIDE = "is_guide";//是否已经启动过欢迎界面
        final String OPEN_UPDATE = "open_update";//是否开启版本更新
        final String VERSION_CODE = "versionCode";//当前版本号
+       final String CART = "cart";//本地购物车信息
     }
 }

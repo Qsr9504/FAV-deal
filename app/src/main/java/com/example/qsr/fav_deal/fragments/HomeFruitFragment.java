@@ -106,25 +106,24 @@ public class HomeFruitFragment extends BaseFragment {
             @Override
             public void onItemClick(int position) {
                 Toast.makeText(getContext(), goodsList.get(position).toString(), Toast.LENGTH_SHORT).show();
+                bundle.putSerializable("showGoods",goodsList.get(position));
                 Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
-                //使用EventBus发送消息
-                EventBus.getDefault().register(new GoodsDetailActivity());
-                MessageEvent messageEvent = new MessageEvent();
-                messageEvent.setString(goodsList.get(position).getG_name());
-                EventBus.getDefault().postSticky(messageEvent);
+                intent.putExtra("showBundle",bundle);
                 startActivity(intent);
-
             }
-
             @Override
-            public boolean onItemLongClick(int position) {
+            public boolean onItemLongClick(View v,int position) {
                 Toast.makeText(getContext(), "点击了长按按钮" + position, Toast.LENGTH_SHORT).show();
                 return false;
             }
-
             @Override
             public void onAddBtn(int position) {
                 Toast.makeText(getContext(), "点击了添加按钮" + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCutBtn(int position) {
+                //此处不需要处理
             }
         });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
