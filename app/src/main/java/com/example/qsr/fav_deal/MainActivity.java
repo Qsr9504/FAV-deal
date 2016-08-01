@@ -1,20 +1,25 @@
 package com.example.qsr.fav_deal;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
+import android.widget.Toast;
 import com.example.qsr.fav_deal.base.BaseActivity;
+import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.fragments.CartFragment;
 import com.example.qsr.fav_deal.fragments.CenterFragment;
 import com.example.qsr.fav_deal.fragments.DeliverFragment;
 import com.example.qsr.fav_deal.fragments.HomePageFragment;
 import com.example.qsr.fav_deal.utils.UIUtils;
-
+import org.greenrobot.eventbus.EventBus;
+import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.joy.imageselector.ImageSelectorActivity;
+import cn.joy.imageselector.Logs;
 
 public class MainActivity extends BaseActivity {
     @Bind(R.id.ll_homePage)
@@ -28,9 +33,7 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.footer_bar)
     LinearLayout footerBar;
     @Bind(R.id.frameLayout)
-
     FrameLayout frameLayout;
-
     private CartFragment cartFragment ;
     private CenterFragment centerFragment;
     private DeliverFragment deliverFragment;
@@ -145,5 +148,23 @@ public class MainActivity extends BaseActivity {
         llCenter.setBackgroundColor(UIUtils.getColorId(R.color.footer_back));
         llDeliver.setBackgroundColor(UIUtils.getColorId(R.color.footer_back));
         llHomePage.setBackgroundColor(UIUtils.getColorId(R.color.footer_back));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 10086 && resultCode == RESULT_OK && data.hasExtra(ImageSelectorActivity.RESULT_IMAGE_SELECTED_PATH)) {
+            ArrayList<String> images = new ArrayList<>();
+            if (3 != ImageSelectorActivity.IMAGE_SELECTOR_MODE_MULTI) {
+                images.add(data.getStringExtra(ImageSelectorActivity.RESULT_IMAGE_SELECTED_PATH));
+            } else {
+                images.addAll(data.getStringArrayListExtra(ImageSelectorActivity.RESULT_IMAGE_SELECTED_PATH));
+            }
+            Logs.e("MainActivity", "onActivityResult " + data.getExtras().get(ImageSelectorActivity.RESULT_IMAGE_SELECTED_PATH).toString());
+            Toast.makeText(this,images.toString(),Toast.LENGTH_SHORT).show();
+            MessageEvent event = new MessageEvent();
+            event.setObject(images);
+            EventBus.getDefault().post(event);
+        }
     }
 }

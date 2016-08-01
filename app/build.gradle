@@ -39,4 +39,6 @@ dependencies {
     compile 'com.android.support:design:23.0.1'
     //数据传递
     compile 'org.greenrobot:eventbus:3.0.0'
+    //头像选择器
+    compile 'cn.joy:imageselector:1.0.1'
 }

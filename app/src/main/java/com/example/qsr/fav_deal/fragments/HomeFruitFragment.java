@@ -41,10 +41,6 @@ public class HomeFruitFragment extends BaseFragment {
     private List<ShowGoods> goodsList = new ArrayList<ShowGoods>();
     private Intent intent;
 
-    @Override
-    protected void initEvent() {
-
-    }
 
     @Override
     protected RequestParams getParams() {

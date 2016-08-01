@@ -3,6 +3,10 @@
     package="com.example.qsr.fav_deal">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".globle.App"
@@ -21,7 +25,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.GoodsDetailActivity" />
-        <activity android:name=".activities.CartDetailActivity"></activity>
+        <activity android:name=".activities.CartDetailActivity" />
+        <!-- 头像选择器 -->
+        <activity android:name="cn.joy.imageselector.ImageSelectorActivity" />
+        <activity android:name="cn.joy.imageselector.crop.ImageCropperActivity" />
+        <activity android:name=".activities.FeedbackActivity"></activity>
     </application>
 
 </manifest>

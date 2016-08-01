@@ -56,7 +56,6 @@ public abstract class BaseFragment extends Fragment {
                 return getUrl();
             }
         };
-        initEvent();
         return loadingPage;
     }
     @Override
@@ -70,7 +69,6 @@ public abstract class BaseFragment extends Fragment {
         }, 1000);
     }
 
-    protected abstract void initEvent();
 
     protected abstract RequestParams getParams();
 

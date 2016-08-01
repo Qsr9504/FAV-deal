@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.qsr.fav_deal.activities.FeedbackActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/t_left"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:minWidth="54dp"
+                android:src="@drawable/left" />
+
+            <TextView
+                android:id="@+id/t_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="首页"
+                android:textColor="@color/title_text"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:id="@+id/t_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:minWidth="54dp"
+                android:src="@drawable/my_setting_icon" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/title_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+        <EditText
+            android:background="@drawable/border_style"
+            android:id="@+id/content"
+            android:padding="5dp"
+            android:layout_weight="5"
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:layout_height="0dp"
+            android:maxLength="300"
+            android:gravity="start"
+            android:hint="请您写下宝贵的建议，这将帮助我们更好的完善产品。"/>
+        <TextView
+            android:gravity="right"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="300字以内"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="提交"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rect_corners"/>
+</LinearLayout>

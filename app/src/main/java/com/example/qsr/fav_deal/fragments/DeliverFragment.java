@@ -13,9 +13,6 @@ import com.loopj.android.http.RequestParams;
  * Description : 当前已经购买的物流详情的界面
  **************************************/
 public class DeliverFragment extends BaseFragment {
-    @Override
-    protected void initEvent() {
-    }
 
     @Override
     protected RequestParams getParams() {

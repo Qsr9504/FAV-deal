@@ -33,9 +33,6 @@ public class HomePageFragment extends BaseFragment {
     //viewpager中的fragment的集合
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
 
-    @Override
-    protected void initEvent() {
-    }
 
     @Override
     protected RequestParams getParams() {
