@@ -35,6 +35,11 @@ public class HomePageFragment extends BaseFragment {
 
 
     @Override
+    protected void initEvent() {
+
+    }
+
+    @Override
     protected RequestParams getParams() {
         return new RequestParams();
     }

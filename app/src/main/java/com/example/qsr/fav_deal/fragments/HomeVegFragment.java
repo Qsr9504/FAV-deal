@@ -30,9 +30,4 @@ public class HomeVegFragment extends Fragment {
         ButterKnife.bind(this, view);
         return view;
     }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
 }

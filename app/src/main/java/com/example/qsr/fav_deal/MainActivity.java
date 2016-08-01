@@ -1,45 +1,80 @@
 package com.example.qsr.fav_deal;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.qsr.fav_deal.base.BaseActivity;
+import com.example.qsr.fav_deal.bean.GridViewItem;
 import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.fragments.CartFragment;
 import com.example.qsr.fav_deal.fragments.CenterFragment;
 import com.example.qsr.fav_deal.fragments.DeliverFragment;
 import com.example.qsr.fav_deal.fragments.HomePageFragment;
+import com.example.qsr.fav_deal.recycler.adapter.SlidingGridViewAdapter;
+import com.example.qsr.fav_deal.ui.IconFontTextView;
 import com.example.qsr.fav_deal.utils.UIUtils;
+
 import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.joy.imageselector.ImageSelectorActivity;
 import cn.joy.imageselector.Logs;
 
 public class MainActivity extends BaseActivity {
+    @Bind(R.id.frameLayout)
+    FrameLayout frameLayout;
+    @Bind(R.id.home_icon)
+    IconFontTextView homeIcon;
+    @Bind(R.id.home_text)
+    TextView homeText;
     @Bind(R.id.ll_homePage)
     LinearLayout llHomePage;
+    @Bind(R.id.deliver_icon)
+    IconFontTextView deliverIcon;
+    @Bind(R.id.deliver_text)
+    TextView deliverText;
     @Bind(R.id.ll_deliver)
     LinearLayout llDeliver;
+    @Bind(R.id.cart_icon)
+    IconFontTextView cartIcon;
+    @Bind(R.id.cart_text)
+    TextView cartText;
     @Bind(R.id.ll_cart)
     LinearLayout llCart;
+    @Bind(R.id.center_icon)
+    IconFontTextView centerIcon;
+    @Bind(R.id.center_text)
+    TextView centerText;
     @Bind(R.id.ll_center)
     LinearLayout llCenter;
     @Bind(R.id.footer_bar)
     LinearLayout footerBar;
-    @Bind(R.id.frameLayout)
-    FrameLayout frameLayout;
-    private CartFragment cartFragment ;
+    @Bind(R.id.fruit_type)
+    TextView fruitType;
+    @Bind(R.id.veg_type)
+    TextView vegType;
+    @Bind(R.id.type_gridV)
+    GridView typeGridV;
+    private CartFragment cartFragment;
     private CenterFragment centerFragment;
     private DeliverFragment deliverFragment;
     private HomePageFragment homeFragment;
     private FragmentTransaction ft;
-
+    private List<GridViewItem> itemList;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -49,16 +84,34 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
         //设置首页
         setSelect(0);
+        //设置抽屉中的条目
+        SlidingGridViewAdapter adapter = new SlidingGridViewAdapter(getData(),MainActivity.this);
+        typeGridV.setAdapter(adapter);
+        typeGridV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this,"点击了" + itemList.get(position).getName(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private List<GridViewItem> getData() {
+        itemList = new ArrayList<GridViewItem>();
+        for (int i = 0;i<=8;i++){
+            itemList.add(new GridViewItem(""+R.mipmap.ic_launcher,"橘子"+i));
+        }
+        return itemList;
     }
 
     @Override
     protected void initView() {
 
     }
-    @OnClick({R.id.ll_homePage,R.id.ll_deliver,R.id.ll_cart,R.id.ll_center
-    ,R.id.home_icon,R.id.home_text,R.id.deliver_icon,R.id.deliver_text,
-    R.id.cart_icon,R.id.cart_text,R.id.center_icon,R.id.center_text})
-    public void changeTab(View view){
+
+    @OnClick({R.id.ll_homePage, R.id.ll_deliver, R.id.ll_cart, R.id.ll_center
+            , R.id.home_icon, R.id.home_text, R.id.deliver_icon, R.id.deliver_text,
+            R.id.cart_icon, R.id.cart_text, R.id.center_icon, R.id.center_text})
+    public void changeTab(View view) {
         switch (view.getId()) {
             case R.id.ll_homePage:
             case R.id.home_icon:
@@ -82,6 +135,7 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
+
     private void setSelect(int i) {
         FragmentManager fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -92,7 +146,7 @@ public class MainActivity extends BaseActivity {
             case 0://首页
                 if (homeFragment == null) {
                     homeFragment = new HomePageFragment();
-                    ft.add(R.id.frameLayout,homeFragment);
+                    ft.add(R.id.frameLayout, homeFragment);
                 }
                 ft.show(homeFragment);
                 //更改Tab的点击样式
@@ -101,7 +155,7 @@ public class MainActivity extends BaseActivity {
             case 1://物流
                 if (deliverFragment == null) {
                     deliverFragment = new DeliverFragment();
-                    ft.add(R.id.frameLayout,deliverFragment);
+                    ft.add(R.id.frameLayout, deliverFragment);
                 }
                 ft.show(deliverFragment);
                 //更改Tab的点击样式
@@ -110,7 +164,7 @@ public class MainActivity extends BaseActivity {
             case 2://购物车
                 if (cartFragment == null) {
                     cartFragment = new CartFragment();
-                    ft.add(R.id.frameLayout,cartFragment);
+                    ft.add(R.id.frameLayout, cartFragment);
                 }
                 ft.show(cartFragment);
                 //更改Tab的点击样式
@@ -119,7 +173,7 @@ public class MainActivity extends BaseActivity {
             case 3://个人资料
                 if (centerFragment == null) {
                     centerFragment = new CenterFragment();
-                    ft.add(R.id.frameLayout,centerFragment);
+                    ft.add(R.id.frameLayout, centerFragment);
                 }
                 ft.show(centerFragment);
                 //更改Tab的点击样式
@@ -128,6 +182,7 @@ public class MainActivity extends BaseActivity {
         }
         ft.commit();
     }
+
     private void hideFragment() {
         if (homeFragment != null) {
             ft.hide(homeFragment);
@@ -142,6 +197,7 @@ public class MainActivity extends BaseActivity {
             ft.hide(centerFragment);
         }
     }
+
     private void reSetTab() {
         //将底部导航栏全部重置
         llCart.setBackgroundColor(UIUtils.getColorId(R.color.footer_back));
@@ -161,10 +217,11 @@ public class MainActivity extends BaseActivity {
                 images.addAll(data.getStringArrayListExtra(ImageSelectorActivity.RESULT_IMAGE_SELECTED_PATH));
             }
             Logs.e("MainActivity", "onActivityResult " + data.getExtras().get(ImageSelectorActivity.RESULT_IMAGE_SELECTED_PATH).toString());
-            Toast.makeText(this,images.toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, images.toString(), Toast.LENGTH_SHORT).show();
             MessageEvent event = new MessageEvent();
             event.setObject(images);
             EventBus.getDefault().post(event);
         }
     }
+
 }

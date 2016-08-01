@@ -78,6 +78,11 @@ public class CenterFragment extends BaseFragment {
     }
 
     @Override
+    protected void initEvent() {
+
+    }
+
+    @Override
     protected RequestParams getParams() {
         return new RequestParams();
     }
@@ -120,11 +125,4 @@ public class CenterFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 }

@@ -72,6 +72,21 @@ public class CartFragment extends BaseFragment {
     private CartAdapter adapter;
 
     @Override
+    protected void initEvent() {
+        //从本地数据库中获取并且初始化购物车列表
+        goodsList = MySPUtil.getCartGoodsJson(AppConstants.CONFIG.CART);
+        if(MySPUtil.getCartGoodsJson(AppConstants.CONFIG.CART).size() ==0) {
+            String picUrl = "http://file.bmob.cn/M01/E1/9C/oYYBAFePPU6ADBA2AAAdNdM4_BM149.jpg";
+            CartGoods goods1 = new CartGoods(1, "小樱桃", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
+            CartGoods goods2 = new CartGoods(2, "火龙果2", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
+            CartGoods goods3 = new CartGoods(3, "火龙果3", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
+            goodsList.add(goods1);
+            goodsList.add(goods2);
+            goodsList.add(goods3);
+        }
+    }
+
+    @Override
     protected RequestParams getParams() {
         return new RequestParams();
     }
@@ -208,17 +223,6 @@ public class CartFragment extends BaseFragment {
                 }
             }
         });
-        //从本地数据库中获取并且初始化购物车列表
-        goodsList = MySPUtil.getCartGoodsJson(AppConstants.CONFIG.CART);
-        if(MySPUtil.getCartGoodsJson(AppConstants.CONFIG.CART).size() ==0) {
-            String picUrl = "http://file.bmob.cn/M01/E1/9C/oYYBAFePPU6ADBA2AAAdNdM4_BM149.jpg";
-            CartGoods goods1 = new CartGoods(1, "小樱桃", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-            CartGoods goods2 = new CartGoods(2, "火龙果2", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-            CartGoods goods3 = new CartGoods(3, "火龙果3", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-            goodsList.add(goods1);
-            goodsList.add(goods2);
-            goodsList.add(goods3);
-        }
         cartRecyclerView.setAdapter(adapter);
         reckonSumMoney();
     }

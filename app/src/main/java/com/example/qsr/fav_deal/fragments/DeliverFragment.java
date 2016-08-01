@@ -15,6 +15,11 @@ import com.loopj.android.http.RequestParams;
 public class DeliverFragment extends BaseFragment {
 
     @Override
+    protected void initEvent() {
+
+    }
+
+    @Override
     protected RequestParams getParams() {
         return new RequestParams();
     }
