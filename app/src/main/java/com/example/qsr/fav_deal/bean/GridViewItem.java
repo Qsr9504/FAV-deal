@@ -7,23 +7,28 @@ package com.example.qsr.fav_deal.bean;
  * Description : 侧滑中的每一个条目
  **************************************/
 public class GridViewItem {
-    private String ImageUrl;//图片的url地址
+    private int ImageId;//图片的id
     private String name;//分类物品名称
 
-    public GridViewItem(String imageUrl, String name) {
-        ImageUrl = imageUrl;
+    @Override
+    public String toString() {
+        return "GridViewItem{" +
+                "ImageId=" + ImageId +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    public GridViewItem(int imageId, String name) {
+        ImageId = imageId;
         this.name = name;
     }
 
-    public GridViewItem() {
+    public int getImageId() {
+        return ImageId;
     }
 
-    public String getImageUrl() {
-        return ImageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        ImageUrl = imageUrl;
+    public void setImageId(int imageId) {
+        ImageId = imageId;
     }
 
     public String getName() {
@@ -32,13 +37,5 @@ public class GridViewItem {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "GridViewItem{" +
-                "ImageUrl='" + ImageUrl + '\'' +
-                ", name='" + name + '\'' +
-                '}';
     }
 }

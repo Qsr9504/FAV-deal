@@ -10,7 +10,11 @@
     <!--底部导航按钮-->
     <color name="footer_normal">#CACACA</color>
     <color name="footer_back">#00f1efef</color>
+    <color name="footer_pressBlack">#000000</color>
     <color name="footer_press">#FFC000</color>
     <!--顶部导航-->
     <color name="title_text">#26B8EE</color>
+
+
+    <color name="white">#ffffff</color>
 </resources>

@@ -29,7 +29,8 @@
         <!-- 头像选择器 -->
         <activity android:name="cn.joy.imageselector.ImageSelectorActivity" />
         <activity android:name="cn.joy.imageselector.crop.ImageCropperActivity" />
-        <activity android:name=".activities.FeedbackActivity"></activity>
+        <activity android:name=".activities.FeedbackActivity" />
+        <activity android:name=".activities.TypeActivity"></activity>
     </application>
 
 </manifest>

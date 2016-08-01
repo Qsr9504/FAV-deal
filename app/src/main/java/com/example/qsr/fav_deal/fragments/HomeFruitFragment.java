@@ -2,6 +2,7 @@ package com.example.qsr.fav_deal.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import com.example.qsr.fav_deal.base.BaseFragment;
 import com.example.qsr.fav_deal.bean.CartGoods;
 import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.bean.ShowGoods;
-import com.example.qsr.fav_deal.globle.AppManager;
 import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
 import com.example.qsr.fav_deal.recycler.adapter.AllFruitAdapter;
 import com.example.qsr.fav_deal.utils.LogUtil;
@@ -38,9 +38,11 @@ import butterknife.ButterKnife;
 public class HomeFruitFragment extends BaseFragment {
     @Bind(R.id.fruit_recyclerView)
     RecyclerView fruitRecyclerView;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
     private List<ShowGoods> goodsList = new ArrayList<ShowGoods>();
     private Intent intent;
-
+    private AllFruitAdapter adapter;
 
     @Override
     protected void initEvent() {
@@ -103,21 +105,32 @@ public class HomeFruitFragment extends BaseFragment {
 //                startActivity(intent);
 //            }
 //        });
-        AllFruitAdapter adapter = new AllFruitAdapter(getContext(), goodsList);
+        refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                goodsList.add(new ShowGoods(100, "下拉刷新来的", ""+R.mipmap.ic_launcher, ""+R.mipmap.ic_launcher, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", ""));
+                fruitRecyclerView.setAdapter(adapter);
+                refresh.setRefreshing(false);
+            }
+        });
+        adapter = new AllFruitAdapter(getContext(), goodsList);
         adapter.setOnRecyclerViewListener(new OnRecyclerViewListener() {
             @Override
             public void onItemClick(int position) {
                 Toast.makeText(getContext(), goodsList.get(position).toString(), Toast.LENGTH_SHORT).show();
-                bundle.putSerializable("showGoods",goodsList.get(position));
+                bundle.putSerializable("showGoods", goodsList.get(position));
                 Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
-                intent.putExtra("showBundle",bundle);
+                intent.putExtra("showBundle", bundle);
                 startActivity(intent);
             }
+
             @Override
-            public boolean onItemLongClick(View v,int position) {
+            public boolean onItemLongClick(View v, int position) {
                 Toast.makeText(getContext(), "点击了长按按钮" + position, Toast.LENGTH_SHORT).show();
                 return false;
             }
+
             @Override
             public void onAddBtn(int position) {
                 Toast.makeText(getContext(), "点击了添加按钮" + position, Toast.LENGTH_SHORT).show();
@@ -133,7 +146,6 @@ public class HomeFruitFragment extends BaseFragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         fruitRecyclerView.setLayoutManager(linearLayoutManager);
         fruitRecyclerView.setAdapter(adapter);
-//        fruit_listView.setAdapter(adapter);
     }
 
     @Override
@@ -180,4 +192,5 @@ public class HomeFruitFragment extends BaseFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
 }

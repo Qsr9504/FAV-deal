@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * FileName : com.example.qsr.fav_deal.recycler.adapter
  * Author : qsr
  * Time : 2016/8/1 17:23
- * Description :
+ * Description : 侧滑抽屉菜单适配器
  **************************************/
 public class SlidingGridViewAdapter extends BaseAdapter {
     private List<GridViewItem> itemList;
@@ -48,21 +48,24 @@ public class SlidingGridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SlidingGridViewAdapter.ViewHolder viewHolder;
+        ViewHolder viewHolder;
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.item_gridview_sliding, null);
 
-            viewHolder = new SlidingGridViewAdapter.ViewHolder(convertView);
+            viewHolder = new ViewHolder(convertView);
 
             viewHolder.itemImage = (ImageView) convertView.findViewById(R.id.item_image);
             viewHolder.itemName = (TextView) convertView.findViewById(R.id.item_name);
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (SlidingGridViewAdapter.ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        Picasso.with(context).load(itemList.get(position).getImageUrl()).error(R.mipmap.ic_launcher)
+        Picasso.with(context).load(itemList.get(position).getImageId())
+                .resize(120, 150)
+                .error(R.mipmap.ic_launcher)
                 .into(viewHolder.itemImage);
         viewHolder.itemName.setText(itemList.get(position).getName());
+        viewHolder.itemName.setVisibility(View.GONE);
         return convertView;
     }
 

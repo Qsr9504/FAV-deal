@@ -4,7 +4,46 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/title_bar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:padding="5dp">
+
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:gravity="center"
+                android:id="@+id/t_left"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="#FFD04F"
+                android:textSize="25sp"
+                android:clickable="true"
+                android:layout_marginLeft="5dp"
+                android:text="@string/icon_tag"
+                 />
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="果蔬世界"
+                android:textColor="#FFD04F"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#FFD04F" />
+    </LinearLayout>
 
     <com.viewpagerindicator.TabPageIndicator
         android:id="@+id/tab_indicator"
