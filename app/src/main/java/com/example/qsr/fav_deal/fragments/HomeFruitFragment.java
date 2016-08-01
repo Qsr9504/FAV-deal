@@ -1,13 +1,10 @@
 package com.example.qsr.fav_deal.fragments;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.qsr.fav_deal.R;
@@ -17,7 +14,7 @@ import com.example.qsr.fav_deal.bean.CartGoods;
 import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.bean.ShowGoods;
 import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
-import com.example.qsr.fav_deal.recycler.adapter.AllFruitAdapter;
+import com.example.qsr.fav_deal.recycler.adapter.NormalGoodsAdapter;
 import com.example.qsr.fav_deal.utils.LogUtil;
 import com.loopj.android.http.RequestParams;
 
@@ -40,9 +37,9 @@ public class HomeFruitFragment extends BaseFragment {
     RecyclerView fruitRecyclerView;
     @Bind(R.id.refresh)
     SwipeRefreshLayout refresh;
-    private List<ShowGoods> goodsList = new ArrayList<ShowGoods>();
+    private List<ShowGoods> goodsList = null;
     private Intent intent;
-    private AllFruitAdapter adapter;
+    private NormalGoodsAdapter adapter;
 
     @Override
     protected void initEvent() {
@@ -69,7 +66,8 @@ public class HomeFruitFragment extends BaseFragment {
         LogUtil.MyLog_e(getContext(), content);
 //        Gson gson = new Gson();
 //        goodsList = gson.fromJson(content,new TypeToken<List<Goods>>(){}.getType());
-        initData();//用于没有网络的时候死数据
+        if(goodsList == null)
+            initData();//用于没有网络的时候死数据
 
 //        MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(getContext(),goodsList) {
 //            @Override
@@ -114,7 +112,7 @@ public class HomeFruitFragment extends BaseFragment {
                 refresh.setRefreshing(false);
             }
         });
-        adapter = new AllFruitAdapter(getContext(), goodsList);
+        adapter = new NormalGoodsAdapter(getContext(), goodsList);
         adapter.setOnRecyclerViewListener(new OnRecyclerViewListener() {
             @Override
             public void onItemClick(int position) {
@@ -134,7 +132,7 @@ public class HomeFruitFragment extends BaseFragment {
             @Override
             public void onAddBtn(int position) {
                 Toast.makeText(getContext(), "点击了添加按钮" + position, Toast.LENGTH_SHORT).show();
-                addToCart(goodsList.get(position));
+                adapter.addToCart(goodsList.get(position));
                 //添加 按钮的飞入购物车动画效果
             }
 
@@ -154,6 +152,7 @@ public class HomeFruitFragment extends BaseFragment {
     }
 
     private void initData() {
+        goodsList = new ArrayList<ShowGoods>();
         String picUrl = "http://file.bmob.cn/M01/E1/9C/oYYBAFePPU6ADBA2AAAdNdM4_BM149.jpg";
         ShowGoods goods1 = new ShowGoods(1, "小樱桃", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
         ShowGoods goods2 = new ShowGoods(2, "火龙果2", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
@@ -177,15 +176,6 @@ public class HomeFruitFragment extends BaseFragment {
         goodsList.add(goods10);
     }
 
-    /**
-     * 添加条目数据到购物车
-     */
-    public void addToCart(ShowGoods showGoods) {
-        CartGoods cartGoods = showGoods.showGoodsToCartGoods(showGoods);
-        MessageEvent event = new MessageEvent();
-        event.setObject(cartGoods);
-        EventBus.getDefault().post(event);
-    }
 
     @Override
     public void onDestroyView() {

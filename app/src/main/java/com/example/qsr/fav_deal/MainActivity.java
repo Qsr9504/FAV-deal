@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qsr.fav_deal.activities.TypeActivity;
 import com.example.qsr.fav_deal.base.BaseActivity;
 import com.example.qsr.fav_deal.bean.GridViewItem;
 import com.example.qsr.fav_deal.bean.MessageEvent;
@@ -86,7 +87,8 @@ public class MainActivity extends BaseActivity {
     private FragmentTransaction ft;
     private List<GridViewItem> itemList = new ArrayList<GridViewItem>();;
     private SlidingGridViewAdapter adapter = null;
-
+    private Intent intent;
+    private Bundle bundle = new Bundle();
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -103,6 +105,10 @@ public class MainActivity extends BaseActivity {
         typeGridV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                intent = new Intent(MainActivity.this, TypeActivity.class);
+                bundle.putString("type",itemList.get(position).getName());
+                intent.putExtra("type_bundle",bundle);
+                startActivity(intent);
                 Toast.makeText(MainActivity.this, "点击了" + itemList.get(position).getName(), Toast.LENGTH_SHORT).show();
             }
         });

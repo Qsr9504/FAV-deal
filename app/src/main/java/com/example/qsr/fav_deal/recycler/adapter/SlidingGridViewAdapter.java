@@ -61,7 +61,7 @@ public class SlidingGridViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Picasso.with(context).load(itemList.get(position).getImageId())
-                .resize(120, 150)
+                .resize(140, 180)
                 .error(R.mipmap.ic_launcher)
                 .into(viewHolder.itemImage);
         viewHolder.itemName.setText(itemList.get(position).getName());

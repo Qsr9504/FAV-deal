@@ -5,10 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.example.qsr.fav_deal.base.BaseViewHolder;
+import com.example.qsr.fav_deal.bean.CartGoods;
+import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.bean.ShowGoods;
 import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
-import com.example.qsr.fav_deal.recycler.holders.FruitNormalHolder;
+import com.example.qsr.fav_deal.recycler.holders.GoodsNormalHolder;
 import com.example.qsr.fav_deal.utils.LogUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -19,14 +23,14 @@ import java.util.List;
  * Description : 主页水果列表适配器
  * 使其泛型为自定义ViewHolder的父类，方便传入多种类型的ViewHolder
  **************************************/
-public class AllFruitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class NormalGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int TYPE_NORMAL = 0;//表示使用的是一般的横向的一个商品
     private final int TYPE_ADVERT = 1;//表示使用的横向的一个广告栏展示
     private List<ShowGoods> goodsList;
     private ShowGoods showGoods;
     private Context context;
     private OnRecyclerViewListener onRecyclerViewListener;
-    public AllFruitAdapter(Context context, List<ShowGoods> goodsList) {
+    public NormalGoodsAdapter(Context context, List<ShowGoods> goodsList) {
         this.context = context;
         this.goodsList = goodsList;
     }
@@ -51,7 +55,7 @@ public class AllFruitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(TYPE_NORMAL == viewType){
-            return new FruitNormalHolder(context,onRecyclerViewListener,parent);
+            return new GoodsNormalHolder(context,onRecyclerViewListener,parent);
         }else if(TYPE_ADVERT == viewType) {
             //这是一个广告位---未完待续
             return null;
@@ -69,9 +73,9 @@ public class AllFruitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ((BaseViewHolder)holder).bindData(goodsList.get(position));
         LogUtil.MyLog_e(context,"进来了绑定数据地方");
         /***************如果有需要使用holder中的其他方法******************/
-        if(holder instanceof FruitNormalHolder){
+        if(holder instanceof GoodsNormalHolder){
             //调用其中的办法: 如让某些控件的不可见
-        }else if(holder instanceof FruitNormalHolder) {
+        }else if(holder instanceof GoodsNormalHolder) {
             //这是一个广告位---未完待续
         }else{
 
@@ -80,5 +84,15 @@ public class AllFruitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return goodsList.size();
+    }
+
+    /**
+     * 添加条目数据到购物车
+     */
+    public void addToCart(ShowGoods showGoods) {
+        CartGoods cartGoods = showGoods.showGoodsToCartGoods(showGoods);
+        MessageEvent event = new MessageEvent();
+        event.setObject(cartGoods);
+        EventBus.getDefault().post(event);
     }
 }

@@ -23,7 +23,7 @@ import butterknife.Bind;
  * Time : 2016/7/30 14:52
  * Description :
  **************************************/
-public class FruitNormalHolder extends BaseViewHolder<Goods> {
+public class GoodsNormalHolder extends BaseViewHolder<Goods> {
     @Bind(R.id.goodsPic)
     ImageView goodsPic;
     @Bind(R.id.goodsName)
@@ -50,7 +50,7 @@ public class FruitNormalHolder extends BaseViewHolder<Goods> {
      * @param onRecyclerViewListener 点击事件监听接口
      * @param root
      */
-    public FruitNormalHolder(Context context, OnRecyclerViewListener onRecyclerViewListener, ViewGroup root) {
+    public GoodsNormalHolder(Context context, OnRecyclerViewListener onRecyclerViewListener, ViewGroup root) {
         super(context, onRecyclerViewListener, root, R.layout.item_goods);
     }
 

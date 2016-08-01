@@ -171,6 +171,7 @@ public class CartFragment extends BaseFragment {
         }
         adapter.notifyDataSetChanged();
         Toast.makeText(getContext(), "添加购物车成功", Toast.LENGTH_SHORT).show();
+        reckonSumMoney();
     }
 
     /**
