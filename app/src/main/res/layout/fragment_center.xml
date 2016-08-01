@@ -136,7 +136,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:textColor="@android:color/black"
-                android:text="邀请好友" />
+                android:text="地址管理" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/llcenter_4"
