@@ -12,13 +12,27 @@ public class Address {
     private String a_phone;//收货人的联系方式
     private String a_default;//是否是默认地址
     private String a_receiver;//收货人姓名
+    private String a_detail;//详细的收货地址
 
-    public Address(int a_id, int u_id, String a_phone, String a_default, String a_receiver) {
+    public Address(int a_id, int u_id, String a_phone, String a_default, String a_receiver, String a_detail) {
         this.a_id = a_id;
         this.u_id = u_id;
         this.a_phone = a_phone;
         this.a_default = a_default;
         this.a_receiver = a_receiver;
+        this.a_detail = a_detail;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "a_id=" + a_id +
+                ", u_id=" + u_id +
+                ", a_phone='" + a_phone + '\'' +
+                ", a_default='" + a_default + '\'' +
+                ", a_receiver='" + a_receiver + '\'' +
+                ", a_detail='" + a_detail + '\'' +
+                '}';
     }
 
     public Address() {
@@ -64,14 +78,11 @@ public class Address {
         this.a_receiver = a_receiver;
     }
 
-    @Override
-    public String toString() {
-        return "Address{" +
-                "a_id=" + a_id +
-                ", u_id=" + u_id +
-                ", a_phone='" + a_phone + '\'' +
-                ", a_default='" + a_default + '\'' +
-                ", a_receiver='" + a_receiver + '\'' +
-                '}';
+    public String getA_detail() {
+        return a_detail;
+    }
+
+    public void setA_detail(String a_detail) {
+        this.a_detail = a_detail;
     }
 }

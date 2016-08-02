@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.qsr.fav_deal.activities.OrderActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:minWidth="54dp"
+                android:src="@drawable/left" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="确定订单"
+                android:textColor="#FFD040"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="注册"
+                android:textColor="#FFD040"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#FFD040" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/receiverAndPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:lines="1"
+                android:padding="2dp"
+                android:text="收货人:乔思荣 联系电话:400-520-1314"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/add_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:lines="2"
+                android:padding="5dp"
+                android:text="东城区交道口南大街15号新华文化大厦一层" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/darker_gray" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_marginTop="5dp"
+                android:id="@+id/order_recycler"
+                android:layout_weight="1"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:clickable="true"
+                android:id="@+id/changeAddresee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:padding="10dp"
+                android:text="点击更换收货地址"
+                android:textColor="#ea1414"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@android:color/darker_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:text="商品总价"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="5dp"
+                    android:text="￥65.53" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:text="优惠"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="5dp"
+                    android:text="￥20" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="应付:" />
+
+        <TextView
+            android:id="@+id/afterDiscount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="left"
+            android:text="￥20" />
+
+        <TextView
+            android:id="@+id/creatOrder"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="#FF602C"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </LinearLayout>
+</LinearLayout>

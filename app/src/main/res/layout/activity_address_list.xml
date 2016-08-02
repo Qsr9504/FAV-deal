@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.qsr.fav_deal.activities.AddressListActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:minWidth="54dp"
+                android:src="@drawable/left" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="地址管理"
+                android:textColor="@color/title_text"
+                android:textSize="22sp" />
+
+            <com.example.qsr.fav_deal.ui.IconFontTextView
+                android:id="@+id/addAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/titleBarAdd"
+                android:textColor="@color/title_text"
+                 />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/title_text" />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/addreRecycle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>

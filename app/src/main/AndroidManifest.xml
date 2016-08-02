@@ -17,9 +17,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".activities.GuideActivity" />
-        <activity android:name=".activities.SpalshActivity">
-
-        </activity>
+        <activity android:name=".activities.SpalshActivity" />
         <activity android:name=".activities.GoodsDetailActivity" />
         <activity android:name=".activities.CartDetailActivity" />
         <!-- 头像选择器 -->
@@ -34,6 +32,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.OrderActivity" />
+        <activity android:name=".activities.AddressListActivity" />
+        <activity android:name=".activities.OrderListActivity" />
+        <activity android:name=".activities.AddressManageActivity"></activity>
     </application>
 
 </manifest>

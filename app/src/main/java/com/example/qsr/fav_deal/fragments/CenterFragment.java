@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.qsr.fav_deal.R;
+import com.example.qsr.fav_deal.activities.AddressManageActivity;
 import com.example.qsr.fav_deal.activities.FeedbackActivity;
 import com.example.qsr.fav_deal.base.BaseFragment;
 import com.example.qsr.fav_deal.bean.MessageEvent;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.joy.imageselector.ImageSelectorActivity;
 
 /**************************************
@@ -56,20 +58,7 @@ public class CenterFragment extends BaseFragment {
     RelativeLayout contactRela;
     private ArrayList<String> images;
     private static final int REQUEST_CODE = 10086;
-
-
-    int selectMode = 1;
-
-    private void selectAvatar() {
-        Intent intent = new Intent(getContext(), ImageSelectorActivity.class);
-        intent.putExtra(ImageSelectorActivity.EXTRA_IMAGE_SELECTOR_MODE,
-                selectMode = ImageSelectorActivity.IMAGE_SELECTOR_MODE_SINGLE_CROP);//选择单张图片
-        intent.putExtra(ImageSelectorActivity.EXTRA_IMAGE_SELECTOR_SHOW_CAMERA,
-                true);//是否启用摄像头
-        intent.putExtra(ImageSelectorActivity.EXTRA_IMAGE_SELECTOR_CROP_SHAPE,
-                1);
-        startActivityForResult(intent, REQUEST_CODE);
-    }
+    private Intent intent;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getImageUrl(MessageEvent event) {
@@ -97,21 +86,27 @@ public class CenterFragment extends BaseFragment {
         return R.layout.fragment_center;
     }
 
+    @OnClick(R.id.contactRela)
+    public void contactRela(View v){
+        //用户反馈
+        startActivity(new Intent(getContext(), FeedbackActivity.class));
+    }
+    @OnClick(R.id.avatar)
+    public void avatar(View v){
+        //点击头像之后的处理事件
+    }
+    @OnClick(R.id.llcenter_5)
+    public void llcenter_5(View v){
+        //地址管理
+        intent = new Intent(getContext(), AddressManageActivity.class);
+        startActivity(intent);
+    }
+    @OnClick(R.id.llcenter_1)
+    public void llcenter_1(View v){
+        //订单管理
+    }
     @Override
     protected void initData(String content, View successView) {
-        contactRela.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), FeedbackActivity.class));
-            }
-        });
-        avatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //点击头像之后的处理事件
-                selectAvatar();
-            }
-        });
         Picasso.with(getContext()).load(R.drawable.demo4).error(R.mipmap.ic_launcher).into(avatar);
     }
 

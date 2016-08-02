@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.qsr.fav_deal.recycler.OnEditOrDeleteListener;
 import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
 import com.example.qsr.fav_deal.utils.LogUtil;
 
@@ -20,7 +21,6 @@ import butterknife.ButterKnife;
 public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
     protected OnRecyclerViewListener onRecyclerViewListener;//声明点击事件接口
     protected Context context;//声明上下文对象
-
     public BaseViewHolder(Context context,OnRecyclerViewListener onRecyclerViewListener, ViewGroup root, int layoutRes) {
         super(LayoutInflater.from(context).inflate(layoutRes, root, false));
         this.onRecyclerViewListener = onRecyclerViewListener;

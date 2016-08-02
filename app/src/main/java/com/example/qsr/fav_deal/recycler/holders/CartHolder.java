@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.base.BaseViewHolder;
 import com.example.qsr.fav_deal.bean.CartGoods;
+import com.example.qsr.fav_deal.recycler.OnEditOrDeleteListener;
 import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
 import com.squareup.picasso.Picasso;
 
@@ -48,7 +49,9 @@ public class CartHolder extends BaseViewHolder {
     public void bindData(final Object o) {
         final CartGoods cartGoods = (CartGoods) o;
         goodsName.setText(cartGoods.getG_name());
-        Picasso.with(context).load(cartGoods.getG_pic()).error(R.drawable.demo2).into(goodsPic);
+        Picasso.with(context).load(cartGoods.getG_pic())
+                .placeholder(R.drawable.demo3)
+                .error(R.drawable.demo2).into(goodsPic);
         goodsName.setText(cartGoods.getG_name());
         price.setText("￥" + cartGoods.getPrice() + "/份");
         count.setText(cartGoods.getCount()+"");

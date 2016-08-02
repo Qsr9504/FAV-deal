@@ -18,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qsr.fav_deal.R;
+import com.example.qsr.fav_deal.activities.AddressListActivity;
 import com.example.qsr.fav_deal.activities.CartDetailActivity;
+import com.example.qsr.fav_deal.activities.OrderActivity;
 import com.example.qsr.fav_deal.base.BaseFragment;
 import com.example.qsr.fav_deal.bean.CartGoods;
 import com.example.qsr.fav_deal.bean.MessageEvent;
@@ -28,6 +30,7 @@ import com.example.qsr.fav_deal.recycler.adapter.CartAdapter;
 import com.example.qsr.fav_deal.ui.IconFontTextView;
 import com.example.qsr.fav_deal.utils.LogUtil;
 import com.example.qsr.fav_deal.utils.MySPUtil;
+import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,7 +73,8 @@ public class CartFragment extends BaseFragment {
     private PopupWindow pw;
     private View view;
     private CartAdapter adapter;
-
+    private Intent intent;
+    private Bundle bundle = new Bundle();
     @Override
     protected void initEvent() {
         //从本地数据库中获取并且初始化购物车列表
@@ -139,9 +143,13 @@ public class CartFragment extends BaseFragment {
      */
     private void goCheck() {
         LogUtil.MyLog_i(getContext(), "--*******************--\n" + goodsList.toString() + "\n--*******************--");
-
+        intent = new Intent(getContext(), OrderActivity.class);
+        Gson gson = new Gson();
+        String cartGoods = gson.toJson(goodsList);
+        bundle.putString("cartList",cartGoods);
+        intent.putExtra("cart_bundle",bundle);
+        startActivity(intent);
     }
-
     private void backUI() {
         edit.setVisibility(View.VISIBLE);
         back.setVisibility(View.GONE);
@@ -160,6 +168,7 @@ public class CartFragment extends BaseFragment {
     protected void initTitle() {
 
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void addCart(MessageEvent event){
         CartGoods cartGoods = (CartGoods) event.getObject();

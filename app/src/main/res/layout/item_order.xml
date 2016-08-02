@@ -84,6 +84,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
             android:layout_alignBottom="@+id/norPrice"
+            android:visibility="gone"
             android:background="@drawable/add_icon"/>
     </RelativeLayout>
 
