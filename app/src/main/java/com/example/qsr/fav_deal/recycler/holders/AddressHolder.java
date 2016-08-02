@@ -46,7 +46,7 @@ public class AddressHolder extends BaseViewHolder {
     public void bindData(Object o) {
         Address address = (Address) o;
         addreReceiver.setText("收货人:" + address.getA_receiver());
-        addrePhone.setText("联系电话" + address.getA_phone());
+        addrePhone.setText("联系电话:" + address.getA_phone());
         addreDetail.setText("送至:" + address.getA_detail());
         editAddress.setOnClickListener(new View.OnClickListener() {
             @Override
