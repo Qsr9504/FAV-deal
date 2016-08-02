@@ -18,11 +18,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".activities.GuideActivity" />
         <activity android:name=".activities.SpalshActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activities.GoodsDetailActivity" />
         <activity android:name=".activities.CartDetailActivity" />
@@ -31,7 +27,13 @@
         <activity android:name="cn.joy.imageselector.crop.ImageCropperActivity" />
         <activity android:name=".activities.FeedbackActivity" />
         <activity android:name=".activities.TypeActivity" />
-        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

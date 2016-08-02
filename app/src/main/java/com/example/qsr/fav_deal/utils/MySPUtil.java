@@ -54,7 +54,6 @@ public class MySPUtil {
 
     /**
      * 判断包含
-     *
      * @param key
      * @return
      */
@@ -74,7 +73,6 @@ public class MySPUtil {
 
     /**
      * 取布尔值，带默认值
-     *
      * @param key
      * @param defVal
      * @return

@@ -127,6 +127,7 @@ public class CartFragment extends BaseFragment {
             public void onClick(View v) {
                 //清空购物车中数据
                 adapter.removeAll();
+                reckonSumMoney();
             }
         });
         initD();//用于没有网络的时候死数据

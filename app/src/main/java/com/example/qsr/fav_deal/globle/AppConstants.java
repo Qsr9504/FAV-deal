@@ -22,5 +22,9 @@ public class AppConstants {
        final String OPEN_UPDATE = "open_update";//是否开启版本更新
        final String VERSION_CODE = "versionCode";//当前版本号
        final String CART = "cart";//本地购物车信息
+
+       final String USER_ID = "id";//当前用户的id
+       final String USER_ACCOUNT = "user_account";//当前用户账户
+       final String USER_PWD = "user_pwd";//当前用户密码
     }
 }

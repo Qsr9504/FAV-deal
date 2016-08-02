@@ -3,14 +3,17 @@ package com.example.qsr.fav_deal.recycler.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.qsr.fav_deal.base.BaseViewHolder;
 import com.example.qsr.fav_deal.bean.CartGoods;
 import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.bean.ShowGoods;
+import com.example.qsr.fav_deal.globle.AppConstants;
 import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
 import com.example.qsr.fav_deal.recycler.holders.GoodsNormalHolder;
 import com.example.qsr.fav_deal.utils.LogUtil;
+import com.example.qsr.fav_deal.utils.MySPUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -90,9 +93,15 @@ public class NormalGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      * 添加条目数据到购物车
      */
     public void addToCart(ShowGoods showGoods) {
-        CartGoods cartGoods = showGoods.showGoodsToCartGoods(showGoods);
-        MessageEvent event = new MessageEvent();
-        event.setObject(cartGoods);
-        EventBus.getDefault().post(event);
+        if(-1 == (MySPUtil.getInt(AppConstants.CONFIG.USER_ID,-1))){
+            //当前没登录，使其登录
+            Toast.makeText(context,"你好像没登录，谁tm知道你谁",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            CartGoods cartGoods = showGoods.showGoodsToCartGoods(showGoods);
+            MessageEvent event = new MessageEvent();
+            event.setObject(cartGoods);
+            EventBus.getDefault().post(event);
+        }
     }
 }

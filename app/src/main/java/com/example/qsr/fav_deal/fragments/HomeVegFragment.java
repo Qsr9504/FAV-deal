@@ -41,7 +41,7 @@ public class HomeVegFragment extends BaseFragment {
     private Intent intent;
     private NormalGoodsAdapter adapter;
     private AsyncHttpClient client;
-    private Bundle bundle;
+    private Bundle bundle = new Bundle();
 
     @Override
     protected void initEvent() {
