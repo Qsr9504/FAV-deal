@@ -33,6 +33,10 @@ public class MySPUtil {
     private static SharedPreferences.Editor editor;
     private static Gson gson;
 
+    /**
+     * 将sp放入App 全局中实例化
+     * @return
+     */
     public static SharedPreferences getInstance() {
         if (sp == null) {
             sp = App.mContext.getSharedPreferences("config", Context.MODE_PRIVATE);
