@@ -8,6 +8,7 @@ import com.example.qsr.fav_deal.BuildConfig;
 import com.example.qsr.fav_deal.utils.LogUtil;
 import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.example.qsr.fav_deal.utils.UIUtils;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,6 +37,7 @@ public class App extends Application{
      * 各种工具类的初始化
      */
     private void initUtils() {
+        Fresco.initialize(mContext);
         EventBus eventBus=EventBus.builder().throwSubscriberException(BuildConfig.DEBUG).build();
         //初始化SharedPreferences
         MySPUtil.getInstance();

@@ -1,6 +1,7 @@
 package com.example.qsr.fav_deal;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,11 +26,14 @@ import com.example.qsr.fav_deal.fragments.HomePageFragment;
 import com.example.qsr.fav_deal.recycler.adapter.SlidingGridViewAdapter;
 import com.example.qsr.fav_deal.ui.IconFontTextView;
 import com.example.qsr.fav_deal.utils.UIUtils;
+import com.yancy.imageselector.ImageSelector;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +93,7 @@ public class MainActivity extends BaseActivity {
     private SlidingGridViewAdapter adapter = null;
     private Intent intent;
     private Bundle bundle = new Bundle();
+    private String avatarUrl;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -290,18 +295,21 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 10086 && resultCode == RESULT_OK && data.hasExtra(ImageSelectorActivity.RESULT_IMAGE_SELECTED_PATH)) {
-            ArrayList<String> images = new ArrayList<>();
-            if (3 != ImageSelectorActivity.IMAGE_SELECTOR_MODE_MULTI) {
-                images.add(data.getStringExtra(ImageSelectorActivity.RESULT_IMAGE_SELECTED_PATH));
-            } else {
-                images.addAll(data.getStringArrayListExtra(ImageSelectorActivity.RESULT_IMAGE_SELECTED_PATH));
+        //判断头像返回的值
+        if (requestCode == ImageSelector.IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            // Get Image Path List
+            List<String> pathList = data.getStringArrayListExtra(com.yancy.imageselector.ImageSelectorActivity.EXTRA_RESULT);
+            for (String path : pathList) {
+                avatarUrl = path;
+                Toast.makeText(MainActivity.this, "ImagePathList" + path, Toast.LENGTH_SHORT).show();
             }
-            Logs.e("MainActivity", "onActivityResult " + data.getExtras().get(ImageSelectorActivity.RESULT_IMAGE_SELECTED_PATH).toString());
-            Toast.makeText(this, images.toString(), Toast.LENGTH_SHORT).show();
-            MessageEvent event = new MessageEvent();
-            event.setObject(images);
-            EventBus.getDefault().post(event);
+            //设置头像预览
+            if (avatarUrl != null) {
+                //发送数据到fragment
+                MessageEvent event = new MessageEvent();
+                event.setString(avatarUrl);
+                EventBus.getDefault().post(event);
+            }
         }
     }
 

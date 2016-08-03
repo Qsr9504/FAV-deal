@@ -1,6 +1,8 @@
 package com.example.qsr.fav_deal.fragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,20 +17,26 @@ import com.example.qsr.fav_deal.activities.FeedbackActivity;
 import com.example.qsr.fav_deal.activities.OrderListActivity;
 import com.example.qsr.fav_deal.base.BaseFragment;
 import com.example.qsr.fav_deal.bean.MessageEvent;
+import com.example.qsr.fav_deal.ui.GlideLoader;
 import com.example.qsr.fav_deal.ui.IconFontTextView;
 import com.example.qsr.fav_deal.ui.MyAvatarImageView;
+import com.example.qsr.fav_deal.utils.ImageUtil;
 import com.loopj.android.http.RequestParams;
 import com.squareup.picasso.Picasso;
+import com.yancy.imageselector.ImageConfig;
+import com.yancy.imageselector.ImageSelector;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.joy.imageselector.ImageSelectorActivity;
 
 /**************************************
  * FileName : com.example.qsr.fav_deal.fragments
@@ -60,12 +68,7 @@ public class CenterFragment extends BaseFragment {
     private ArrayList<String> images;
     private static final int REQUEST_CODE = 10086;
     private Intent intent;
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getImageUrl(MessageEvent event) {
-        images = (ArrayList<String>) event.getObject();
-        Picasso.with(getContext()).load(images.get(0)).into(avatar);
-    }
+    private Bitmap bitmap;
 
     @Override
     protected void initEvent() {
@@ -88,28 +91,66 @@ public class CenterFragment extends BaseFragment {
     }
 
     @OnClick(R.id.contactRela)
-    public void contactRela(View v){
+    public void contactRela(View v) {
         //用户反馈
         startActivity(new Intent(getContext(), FeedbackActivity.class));
     }
+
     @OnClick(R.id.avatar)
-    public void avatar(View v){
+    public void avatar(View v) {
         //点击头像之后的处理事件
+        //执行选择图片activity并且获取路径
+        showChangePic();
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void setAvatarFromRes(MessageEvent event) {
+        String avatarUrl = event.getString();
+        try {
+            FileInputStream fis = new FileInputStream(avatarUrl);
+            bitmap = BitmapFactory.decodeStream(fis);
+            avatar.setImageBitmap(ImageUtil.comp(bitmap));
+//                  保存到服务器以及本地xml更新
+//            saveChangeToServer();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showChangePic() {
+        ImageConfig imageConfig
+                = new ImageConfig.Builder(new GlideLoader())
+                .steepToolBarColor(getResources().getColor(R.color.blue))
+                .titleBgColor(getResources().getColor(R.color.blue))
+                .titleSubmitTextColor(getResources().getColor(R.color.white))
+                .titleTextColor(getResources().getColor(R.color.white))
+                // 开启单选   （默认为多选）
+                .singleSelect()
+                // 开启拍照功能 （默认关闭）
+                .showCamera()
+                // 拍照后存放的图片路径（默认 /temp/picture） （会自动创建）
+                .filePath("/chorusMessage/avatar")
+                .build();
+        ImageSelector.open(getActivity(), imageConfig);   // 开启图片选择器
+    }
+
     @OnClick(R.id.llcenter_5)
-    public void llcenter_5(View v){
+    public void llcenter_5(View v) {
         //地址管理
         intent = new Intent(getContext(), AddressManageActivity.class);
         startActivity(intent);
     }
+
     @OnClick(R.id.llcenter_1)
-    public void llcenter_1(View v){
+    public void llcenter_1(View v) {
         //订单管理
         intent = new Intent(getContext(), OrderListActivity.class);
         startActivity(intent);
     }
+
     @Override
     protected void initData(String content, View successView) {
+        EventBus.getDefault().register(this);
         Picasso.with(getContext()).load(R.drawable.demo4).error(R.mipmap.ic_launcher).into(avatar);
     }
 
@@ -123,4 +164,11 @@ public class CenterFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
 }
