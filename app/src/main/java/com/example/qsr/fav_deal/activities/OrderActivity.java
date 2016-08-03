@@ -15,10 +15,12 @@ import com.example.qsr.fav_deal.bean.Address;
 import com.example.qsr.fav_deal.bean.CartGoods;
 import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.bean.Order;
+import com.example.qsr.fav_deal.globle.AppConstants;
 import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
 import com.example.qsr.fav_deal.recycler.adapter.CartAdapter;
 import com.example.qsr.fav_deal.ui.MyLinearLayoutManager;
 import com.example.qsr.fav_deal.utils.LogUtil;
+import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,6 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import butterknife.Bind;
@@ -54,6 +57,7 @@ public class OrderActivity extends AppCompatActivity {
     private Intent intent;
     private Order order;
     private List<CartGoods> cartsList;
+    private Address address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +73,7 @@ public class OrderActivity extends AppCompatActivity {
         Gson gson = new Gson();
         cartsList = gson.fromJson(cartList, new TypeToken<List<CartGoods>>() {
         }.getType());
-        LogUtil.MyLog_i(this, cartsList.size()+"");
+        LogUtil.MyLog_i(this, cartsList.size() + "");
         //声明初始化适配器
         initData();
     }
@@ -96,7 +100,7 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onCutBtn(int position) {
                 if (cartsList.get(position).getCount() == 1) {
-                    Toast.makeText(OrderActivity.this, "最低选择一件商品，长按可删除该条目", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrderActivity.this, "最低选择一件商品", Toast.LENGTH_SHORT).show();
                 } else {
                     //使list集合中的数量变化
                     cartsList.get(position).setCount(cartsList.get(position).getCount() - 1);
@@ -111,11 +115,12 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void setAddre(MessageEvent event){
-        Address address = (Address)event.getObject();
-        receiverAndPhone.setText("收货人:" + address.getA_receiver() + " " + "联系方式:"+address.getA_phone());
+    public void setAddre(MessageEvent event) {
+        Address address = (Address) event.getObject();
+        receiverAndPhone.setText("收货人:" + address.getA_receiver() + " " + "联系方式:" + address.getA_phone());
         addDetail.setText("送至:" + address.getA_detail());
     }
+
     @OnClick(R.id.back)
     public void back(View v) {
         //销毁当前订单，返回购物车
@@ -132,8 +137,28 @@ public class OrderActivity extends AppCompatActivity {
     @OnClick(R.id.creatOrder)
     public void creatOrder(View view) {
         //生成订单,添加到订单列表
-        // 只能添加服务器存储，不可以创建本地存储
+
         order = new Order();
+        //-------------------------
+        // 只能添加服务器存储，不可以创建本地存储
+        //-------------------------
+        //假设创建成功返回。  有一个订单状态和订单id
+        if (-1 == (MySPUtil.getInt(AppConstants.CONFIG.USER_ID, -1))) {
+            //如果没有登录
+            Toast.makeText(OrderActivity.this, "您没登录", Toast.LENGTH_SHORT).show();
+        } else {
+            order.setU_id(MySPUtil.getInt(AppConstants.CONFIG.USER_ID));
+            order.setA_id(address.getA_id());
+            order.setList(CartGoods.CgListToCiList(cartsList));
+            order.setO_money(Integer.parseInt(afterDiscount.getText().toString()));
+            order.setO_id(1);//订单id   --- 测试数据为1
+            order.setO_state("0");//订单状态  --- 默认为已付款
+            order.setTime(Integer.parseInt(getCurrentTime()));
+            MessageEvent event = new MessageEvent();
+            event.setObject(order);
+            EventBus.getDefault().post(event);
+        }
+
     }
 
     /**
@@ -151,9 +176,9 @@ public class OrderActivity extends AppCompatActivity {
             for (CartGoods ori : cartsList) {
                 oriMoney += (Double.parseDouble(ori.getPrice()) * ori.getCount());
             }
-            afterDiscount.setText("" + meg(sMoney)+"元");
-            price.setText("" + meg(oriMoney)+"元");
-            discount.setText("" + meg(oriMoney - sMoney)+"元");
+            afterDiscount.setText("" + meg(sMoney) + "元");
+            price.setText("" + meg(oriMoney) + "元");
+            discount.setText("" + meg(oriMoney - sMoney) + "元");
         }
     }
 
@@ -165,5 +190,11 @@ public class OrderActivity extends AppCompatActivity {
             c = ((double) d); //还原小数点
         }
         return c;
+    }
+
+    public String getCurrentTime() {
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");
+        String date = sDateFormat.format(new java.util.Date());
+        return date;
     }
 }

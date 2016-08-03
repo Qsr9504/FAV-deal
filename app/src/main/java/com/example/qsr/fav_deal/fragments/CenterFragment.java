@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.activities.AddressManageActivity;
 import com.example.qsr.fav_deal.activities.FeedbackActivity;
+import com.example.qsr.fav_deal.activities.OrderListActivity;
 import com.example.qsr.fav_deal.base.BaseFragment;
 import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.ui.IconFontTextView;
@@ -104,6 +105,8 @@ public class CenterFragment extends BaseFragment {
     @OnClick(R.id.llcenter_1)
     public void llcenter_1(View v){
         //订单管理
+        intent = new Intent(getContext(), OrderListActivity.class);
+        startActivity(intent);
     }
     @Override
     protected void initData(String content, View successView) {

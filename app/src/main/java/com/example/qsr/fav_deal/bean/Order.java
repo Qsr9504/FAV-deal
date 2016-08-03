@@ -13,7 +13,7 @@ public class Order {
     private int u_id;//订单所属的用户id
     private int time;//订单时间
     private int o_money;//订单总金额
-    private String o_state;//订单进度
+    private String o_state = "10";//订单进度 - 0 已付款 - 1 商家已接单 -  2 已发货  - 3 交易结束
     private String o_judge;//本订单的用户评价
     private String o_note;//本订单的用户备注
     private int a_id;//地址的id

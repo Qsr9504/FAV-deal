@@ -35,7 +35,8 @@
         <activity android:name=".activities.OrderActivity" />
         <activity android:name=".activities.AddressListActivity" />
         <activity android:name=".activities.OrderListActivity" />
-        <activity android:name=".activities.AddressManageActivity"></activity>
+        <activity android:name=".activities.AddressManageActivity" />
+        <activity android:name=".activities.OrderDetailActivity"></activity>
     </application>
 
 </manifest>

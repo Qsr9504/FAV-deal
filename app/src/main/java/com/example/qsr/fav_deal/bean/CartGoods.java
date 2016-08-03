@@ -1,5 +1,8 @@
 package com.example.qsr.fav_deal.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**************************************
  * FileName : com.example.qsr.fav_deal.bean
  * Author : qsr
@@ -38,5 +41,18 @@ public class CartGoods extends Goods {
         showGoods.setG_detail(cartGoods.getG_detail());
         showGoods.setG_detailUrl(cartGoods.getG_detailUrl());
         return showGoods;
+    }
+    public CartItem CartGoodsToOrder(CartGoods cartGoods){
+        CartItem cartItem = new CartItem();
+        cartItem.setG_id(cartGoods.getG_id());
+        cartItem.setCount(cartGoods.count);
+        return cartItem;
+    }
+    public static List<CartItem> CgListToCiList(List<CartGoods> cartGoodsList){
+        List<CartItem> cartItemList = new ArrayList<CartItem>();
+        for (CartGoods c:cartGoodsList) {
+            cartItemList.add(new CartItem(c.getG_id(),c.count));
+        }
+        return cartItemList;
     }
 }

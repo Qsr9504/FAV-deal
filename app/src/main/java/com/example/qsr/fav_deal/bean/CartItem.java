@@ -14,6 +14,8 @@ public class CartItem {
         this.g_id = g_id;
         this.count = count;
     }
+    public CartItem() {
+    }
 
     public int getG_id() {
         return g_id;
@@ -30,4 +32,5 @@ public class CartItem {
     public void setCount(int count) {
         this.count = count;
     }
+
 }
