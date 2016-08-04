@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qsr.fav_deal.R;
+import com.example.qsr.fav_deal.bmobUtil.bean.Feedback;
 import com.example.qsr.fav_deal.utils.TextUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -17,6 +18,7 @@ import com.loopj.android.http.RequestParams;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.bmob.v3.listener.SaveListener;
 
 public class FeedbackActivity extends AppCompatActivity {
 
@@ -69,30 +71,19 @@ public class FeedbackActivity extends AppCompatActivity {
      * 发送反馈到服务器
      */
     private void sendToServer() {
-        //上传到服务器
-        AsyncHttpClient client = new AsyncHttpClient();
-        RequestParams params = new RequestParams();
-        params.put("feedback", content.getText().toString());
-        client.post("", params, new AsyncHttpResponseHandler() {
+        Feedback feedback = new Feedback();
+        feedback.setFb_content(content.getText().toString());
+        feedback.save(FeedbackActivity.this, new SaveListener() {
             @Override
-            public void onSuccess(String content) {
-                super.onSuccess(content);
-                if ("OK".equals(content)) {
-                    Toast.makeText(FeedbackActivity.this, "反馈成功", Toast.LENGTH_SHORT).show();
-                    //跳转回主界面
-                    back();
-                }
-
+            public void onSuccess() {
+                Toast.makeText(FeedbackActivity.this,"谢谢您的反馈！",Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override
-            public void onFailure(Throwable error, String content) {
-                super.onFailure(error, content);
-                //跳转回主界面
-                Toast.makeText(FeedbackActivity.this, "反馈失败", Toast.LENGTH_SHORT).show();
-                back();
+            public void onFailure(int i, String s) {
+                Toast.makeText(FeedbackActivity.this,"反馈失败！" + s,Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

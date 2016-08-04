@@ -156,11 +156,11 @@ public class CenterFragment extends BaseFragment {
     @OnClick(R.id.llcenter_6)
     public void llcenter_6(View v) {
         if(MySPUtil.getBoolean(AppConstants.CONFIG.OPEN_UPDATE) == true) {//当前已开启
-            //版本检测
+            //版本检测关闭
             MySPUtil.save(AppConstants.CONFIG.OPEN_UPDATE, false);
             llcenter6Text.setText("Closed");
         }else {
-            //版本检测
+            //版本检测开启
             MySPUtil.save(AppConstants.CONFIG.OPEN_UPDATE, true);
             llcenter6Text.setText("Opened");
         }
