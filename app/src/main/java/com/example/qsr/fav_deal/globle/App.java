@@ -12,6 +12,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 
 import org.greenrobot.eventbus.EventBus;
 
+import cn.bmob.v3.Bmob;
+
 /**************************************
  * FileName : com.example.qsr.fav_deal.globle
  * Author : qsr
@@ -38,6 +40,8 @@ public class App extends Application{
      */
     private void initUtils() {
         Fresco.initialize(mContext);
+        //第一：默认初始化
+        Bmob.initialize(this, "7ea07da0f54fc46039aff798dc2e89b2");
         EventBus eventBus=EventBus.builder().throwSubscriberException(BuildConfig.DEBUG).build();
         //初始化SharedPreferences
         MySPUtil.getInstance();

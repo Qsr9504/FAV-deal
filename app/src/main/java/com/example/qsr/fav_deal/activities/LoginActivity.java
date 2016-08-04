@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qsr.fav_deal.bmobUtil.MesEventForBmob;
+import com.example.qsr.fav_deal.bmobUtil.UserTools;
 import com.example.qsr.fav_deal.MainActivity;
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.bean.User;
@@ -18,9 +20,14 @@ import com.example.qsr.fav_deal.globle.AppConstants;
 import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.example.qsr.fav_deal.utils.TextUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -54,12 +61,17 @@ public class LoginActivity extends AppCompatActivity {
     LinearLayout registerLayout;
     private Intent intent;
     private User user;
+    private UserTools userTools;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
+        ButterKnife.bind(LoginActivity.this);
+        //实例化与bmob后端云的用户操作工具类
+        userTools = UserTools.getInstance(LoginActivity.this);
     }
 
     //登录按钮提交
@@ -70,35 +82,51 @@ public class LoginActivity extends AppCompatActivity {
         if (TextUtil.isEmpty(loginAccount.getText().toString(), loginPwd.getText().toString())) {
             Toast.makeText(LoginActivity.this, "账号或密码不能为空", Toast.LENGTH_SHORT).show();
         } else {
-            //从服务器验证，
-            //成功后将其信息保存至本地
-            user.setU_id(1);
             user.setU_account(loginAccount.getText().toString());
             user.setU_pwd(loginPwd.getText().toString());
-            saveUser(user);
+            userTools.loginUser(user);
         }
     }
+
+
     //注册按钮提交
     @OnClick(R.id.register_submit)
     public void register_submit(View v) {
         //获取界面上账户和密码信息
         if (TextUtil.isEmpty(registerAccount.getText().toString(),
                 registerPwd.getText().toString(),
-                registerPwd2.getText().toString())){
+                registerPwd2.getText().toString())) {
             Toast.makeText(LoginActivity.this, "账号或密码不能为空", Toast.LENGTH_SHORT).show();
-        }
-        else{
+        } else {
             if (!(registerPwd.getText().toString()).equals((registerPwd2.getText().toString()))) {
                 Toast.makeText(LoginActivity.this, "两次密码不一致", Toast.LENGTH_SHORT).show();
             } else {
-                //从服务器验证账号是否已经注册
-                //成功后将其信息保存至本地
-                //页面跳转至主界面,并销毁当前页面
-                user.setU_id(1);
+                user = new User();
+
                 user.setU_account(registerAccount.getText().toString());
                 user.setU_pwd(registerPwd.getText().toString());
-                saveUser(user);
+                //从服务器验证账号是否已经注册
+                userTools.registerUser(user);
             }
+        }
+    }
+
+    //登录注册的返回结果
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void creatUser(MesEventForBmob eventForBmob) {
+        int code = eventForBmob.getStateCode();
+        if (UserTools.REGISTER_SUCCESS == code) {
+            //注册成功
+            saveUser();
+            Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+        }else if(UserTools.REGISTER_FAIL == code){
+            Toast.makeText(this, "注册失败" + eventForBmob.getString(), Toast.LENGTH_SHORT).show();
+        }else if(UserTools.LOGIN_SUCCESS == code){
+            //登录成功
+            saveUser();
+            Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+        }else if(UserTools.LOGIN_FAIL == code){
+            Toast.makeText(this, "登录失败" + eventForBmob.getString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -107,24 +135,29 @@ public class LoginActivity extends AppCompatActivity {
     public void login_register(View v) {
         loginLayout.setVisibility(View.GONE);
     }
+
     @OnClick(R.id.t_left)
     public void t_left(View v) {
         loginLayout.setVisibility(View.VISIBLE);
     }
+
     @OnClick(R.id.ignore)
     public void ignore(View v) {
         intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void saveUser(User user){
+    /**
+     * 成功后将其信息保存至本地
+     * 页面跳转至主界面,并销毁当前页面
+     */
+    public void saveUser() {
         //保存当前用户信息
-        MySPUtil.save(AppConstants.CONFIG.USER_ID,user.getU_id());//保存当前用户id
-        MySPUtil.save(AppConstants.CONFIG.USER_ACCOUNT,user.getU_account());//保存当前用户账户
-        MySPUtil.save(AppConstants.CONFIG.USER_PWD,user.getU_pwd());//保存当前用户密码
-
-        //跳转到主界面
-        intent = new Intent(LoginActivity.this, SpalshActivity.class);
+        MySPUtil.save(AppConstants.CONFIG.USER_ID, BmobUser.getCurrentUser(this).getObjectId());//保存当前用户id
+        MySPUtil.save(AppConstants.CONFIG.USER_ACCOUNT, BmobUser.getCurrentUser(this).getUsername());//保存当前用户账户
+        MySPUtil.save(AppConstants.CONFIG.OPEN_UPDATE,true);//默认开启版本检测
+        //跳转到登录注册界面
+        intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

@@ -1,16 +1,12 @@
-package com.example.qsr.fav_deal.bean;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+package com.example.qsr.fav_deal.bmobUtil;
 
 /**************************************
- * FileName : EventBus传递数据的实体类工具
+ * FileName : com.example.qsr.fav_deal.BmobUtil
  * Author : qsr
- * Time : 2016/7/31 2:46
- * Description : EventBus使用
+ * Time : 2016/8/4 10:00
+ * Description : 用于bmob后端云使用的eventbus数据类
  **************************************/
-public class MessageEvent {
+public class MesEventForBmob {
     private String string;
 
     private Object object;

@@ -1,13 +1,15 @@
 package com.example.qsr.fav_deal.bean;
 
+import cn.bmob.v3.BmobUser;
+
 /**************************************
  * FileName : com.example.qsr.fav_deal.bean
  * Author : qsr
  * Time : 2016/7/28 16:46
  * Description : 用户表
  **************************************/
-public class User {
-    private int u_id;//用户的唯一标识
+public class User extends BmobUser{
+    private String u_id;//用户的唯一标识
     private String u_avatar;//用户的头像url地址
     private String u_account;//用户的账户
     private String u_pwd;//用户的密码
@@ -16,12 +18,13 @@ public class User {
     private String u_phone;//用户常用手机号码
     private int u_role;//用户的角色
     private int u_money;//用户的当前资产
+    private String u_email;//用户邮箱
 
-    public int getU_id() {
+    public String getU_id() {
         return u_id;
     }
 
-    public void setU_id(int u_id) {
+    public void setU_id(String u_id) {
         this.u_id = u_id;
     }
 
@@ -89,7 +92,7 @@ public class User {
         this.u_money = u_money;
     }
 
-    public User(int u_id, String u_avatar, String u_account, String u_pwd, int u_integra, String u_realName, String u_phone, int u_role, int u_money) {
+    public User(String u_id, String u_avatar, String u_account, String u_pwd, int u_integra, String u_realName, String u_phone, int u_role, int u_money) {
         this.u_id = u_id;
         this.u_avatar = u_avatar;
         this.u_account = u_account;

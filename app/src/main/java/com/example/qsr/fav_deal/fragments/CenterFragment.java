@@ -17,10 +17,13 @@ import com.example.qsr.fav_deal.activities.FeedbackActivity;
 import com.example.qsr.fav_deal.activities.OrderListActivity;
 import com.example.qsr.fav_deal.base.BaseFragment;
 import com.example.qsr.fav_deal.bean.MessageEvent;
+import com.example.qsr.fav_deal.globle.App;
+import com.example.qsr.fav_deal.globle.AppConstants;
 import com.example.qsr.fav_deal.ui.GlideLoader;
 import com.example.qsr.fav_deal.ui.IconFontTextView;
 import com.example.qsr.fav_deal.ui.MyAvatarImageView;
 import com.example.qsr.fav_deal.utils.ImageUtil;
+import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.loopj.android.http.RequestParams;
 import com.squareup.picasso.Picasso;
 import com.yancy.imageselector.ImageConfig;
@@ -57,6 +60,8 @@ public class CenterFragment extends BaseFragment {
     LinearLayout llcenter5;
     @Bind(R.id.llcenter_4)
     LinearLayout llcenter4;
+    @Bind(R.id.llcenter_6_text)
+    TextView llcenter6Text;
     @Bind(R.id.llcenter_6)
     LinearLayout llcenter6;
     @Bind(R.id.phone)
@@ -129,7 +134,7 @@ public class CenterFragment extends BaseFragment {
                 // 开启拍照功能 （默认关闭）
                 .showCamera()
                 // 拍照后存放的图片路径（默认 /temp/picture） （会自动创建）
-                .filePath("/chorusMessage/avatar")
+                .filePath("/fav/avatar")
                 .build();
         ImageSelector.open(getActivity(), imageConfig);   // 开启图片选择器
     }
@@ -148,10 +153,26 @@ public class CenterFragment extends BaseFragment {
         startActivity(intent);
     }
 
+    @OnClick(R.id.llcenter_6)
+    public void llcenter_6(View v) {
+        if(MySPUtil.getBoolean(AppConstants.CONFIG.OPEN_UPDATE) == true) {//当前已开启
+            //版本检测
+            MySPUtil.save(AppConstants.CONFIG.OPEN_UPDATE, false);
+            llcenter6Text.setText("Closed");
+        }else {
+            //版本检测
+            MySPUtil.save(AppConstants.CONFIG.OPEN_UPDATE, true);
+            llcenter6Text.setText("Opened");
+        }
+
+    }
+
     @Override
     protected void initData(String content, View successView) {
         EventBus.getDefault().register(this);
+        //初始化界面的值
         Picasso.with(getContext()).load(R.drawable.demo4).error(R.mipmap.ic_launcher).into(avatar);
+        llcenter6Text.setText(MySPUtil.getBoolean(AppConstants.CONFIG.OPEN_UPDATE,false) == false ? "Closed" : "Opened");
     }
 
     @Override
@@ -164,11 +185,4 @@ public class CenterFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 }

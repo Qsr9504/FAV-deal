@@ -93,7 +93,7 @@ public class NormalGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      * 添加条目数据到购物车
      */
     public void addToCart(ShowGoods showGoods) {
-        if(-1 == (MySPUtil.getInt(AppConstants.CONFIG.USER_ID,-1))){
+        if("".equals(MySPUtil.getString(AppConstants.CONFIG.USER_ID,""))){
             //当前没登录，使其登录
             Toast.makeText(context,"你好像没登录，谁tm知道你谁",Toast.LENGTH_SHORT).show();
         }

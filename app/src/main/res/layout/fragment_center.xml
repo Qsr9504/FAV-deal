@@ -192,12 +192,13 @@
                 android:text="@string/center_joinus" />
 
             <TextView
+                android:id="@+id/llcenter_6_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:textColor="@android:color/black"
-                android:text="加入联盟" />
+                android:text="Closed" />
         </LinearLayout>
     </RelativeLayout>
 

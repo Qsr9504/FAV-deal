@@ -57,7 +57,6 @@ public class HomeCommFragment extends Fragment {
         for (int i = 0; i < 8; i++) {
             one[i] = datas[i];
         }
-
         for (int j = 0; j < 8; j++) {
             two[j] = datas[j + 8];
         }

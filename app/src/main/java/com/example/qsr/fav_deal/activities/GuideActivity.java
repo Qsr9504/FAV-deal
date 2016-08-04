@@ -47,7 +47,7 @@ public class GuideActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MySPUtil.save(AppConstants.CONFIG.IS_GUIDE,true);
-                startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                startActivity(new Intent(GuideActivity.this, LoginActivity.class));
                 finish();
             }
         });
