@@ -1,6 +1,10 @@
 package com.example.qsr.fav_deal.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.bmob.v3.BmobObject;
 
 /**************************************
  * FileName : com.example.qsr.fav_deal.bean
@@ -8,7 +12,7 @@ import java.io.Serializable;
  * Time : 2016/7/28 16:34
  * Description : 商品详情
  **************************************/
-public class Goods implements Serializable {
+public class Goods extends BmobObject implements Serializable {
     private int g_id;//唯一标示
     private String g_name;//商品名称
     private String g_pic; //商品图片url地址
@@ -16,17 +20,17 @@ public class Goods implements Serializable {
     private String g_desc;//商品简短描述
     private String memb_price;//商品会员价格
     private String price;//商品非会员价格
-    private int g_repertory;//商品库存
-    private int g_sales;//商品销售量
-    private int g_type;//商品类型
+    private Integer g_repertory;//商品库存
+    private Integer g_sales;//商品销售量
+    private Integer g_type;//商品类型
     private String g_detail;//商品详细（文字）
     private String g_detailUrl;//商品详细大图url地址
 
-    public int getG_id() {
+    public Integer getG_id() {
         return g_id;
     }
 
-    public void setG_id(int g_id) {
+    public void setG_id(Integer g_id) {
         this.g_id = g_id;
     }
 
@@ -78,23 +82,23 @@ public class Goods implements Serializable {
         this.price = price;
     }
 
-    public int getG_repertory() {
+    public Integer getG_repertory() {
         return g_repertory;
     }
 
-    public void setG_repertory(int g_repertory) {
+    public void setG_repertory(Integer g_repertory) {
         this.g_repertory = g_repertory;
     }
 
-    public int getG_sales() {
+    public Integer getG_sales() {
         return g_sales;
     }
 
-    public void setG_sales(int g_sales) {
+    public void setG_sales(Integer g_sales) {
         this.g_sales = g_sales;
     }
 
-    public int getG_type() {
+    public Integer getG_type() {
         return g_type;
     }
 
@@ -118,7 +122,7 @@ public class Goods implements Serializable {
         this.g_detailUrl = g_detailUrl;
     }
 
-    public Goods(int g_id, String g_name, String g_pic, String g_pic_big, String g_desc, String memb_price, String price, int g_repertory, int g_sales, int g_type, String g_detail, String g_detailUrl) {
+    public Goods(Integer g_id, String g_name, String g_pic, String g_pic_big, String g_desc, String memb_price, String price, int g_repertory, int g_sales, int g_type, String g_detail, String g_detailUrl) {
         this.g_id = g_id;
         this.g_name = g_name;
         this.g_pic = g_pic;
@@ -135,7 +139,27 @@ public class Goods implements Serializable {
 
     public Goods() {
     }
-
+    public static List<ShowGoods> GoodsToShowGoods(List<Goods> goods){
+        List<ShowGoods> showGoodses = new ArrayList<ShowGoods>();
+        for (Goods g:goods) {
+            ShowGoods s = new ShowGoods();
+            s.setG_id(g.getG_id());
+            s.setG_name(g.getG_name());
+            s.setG_pic(g.getG_pic());
+            s.setG_pic_big(g.getG_pic_big());
+            s.setG_desc(g.getG_desc());
+            s.setMemb_price(g.getMemb_price());
+            s.setPrice(g.getPrice());
+            s.setG_repertory(g.getG_repertory());
+            s.setG_sales(g.getG_sales());
+            s.setG_type(g.getG_type());
+            s.setG_detail(g.getG_detail());
+            s.setG_detailUrl(g.getG_detailUrl());
+            s.setShowType(0);
+            showGoodses.add(s);
+        }
+        return showGoodses;
+    }
     @Override
     public String toString() {
         return "Goods{" +

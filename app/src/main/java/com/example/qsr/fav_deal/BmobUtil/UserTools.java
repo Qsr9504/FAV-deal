@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.example.qsr.fav_deal.bean.User;
+import com.example.qsr.fav_deal.bmobUtil.bean.BmobOrder;
+import com.example.qsr.fav_deal.utils.LogUtil;
 import com.example.qsr.fav_deal.utils.Md5;
 import com.example.qsr.fav_deal.utils.TextUtil;
 
@@ -11,6 +13,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**************************************
  * FileName : com.example.qsr.fav_deal.BmobUtil
@@ -113,4 +116,24 @@ public class UserTools {
             Toast.makeText(context,"用户名或密码为空",Toast.LENGTH_SHORT).show();
         }
     }
+    public void updateUserMoney(int money){
+        User currentUser = BmobUser.getCurrentUser(context,User.class);
+        User user = new User();
+        user.setU_money(currentUser.getU_money() - money);//减少钱
+        LogUtil.MyLog_e(context,user.getU_money()+"");
+        LogUtil.MyLog_e(context,money + "");
+        user.setU_integra(currentUser.getU_integra() + (money/10));//增加积分
+        user.update(context);
+        user.update(context,bmobUser.getObjectId(),new UpdateListener() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(context,"扣钱成功",Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFailure(int code, String msg) {
+
+            }
+        });
+    }
+
 }

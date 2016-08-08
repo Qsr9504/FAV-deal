@@ -27,6 +27,7 @@ import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.globle.AppConstants;
 import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
 import com.example.qsr.fav_deal.recycler.adapter.CartAdapter;
+import com.example.qsr.fav_deal.recycler.adapter.NormalGoodsAdapter;
 import com.example.qsr.fav_deal.ui.IconFontTextView;
 import com.example.qsr.fav_deal.utils.LogUtil;
 import com.example.qsr.fav_deal.utils.MySPUtil;
@@ -80,13 +81,7 @@ public class CartFragment extends BaseFragment {
         //从本地数据库中获取并且初始化购物车列表
         goodsList = MySPUtil.getCartGoodsJson(AppConstants.CONFIG.CART);
         if(MySPUtil.getCartGoodsJson(AppConstants.CONFIG.CART).size() ==0) {
-            String picUrl = "http://file.bmob.cn/M01/E1/9C/oYYBAFePPU6ADBA2AAAdNdM4_BM149.jpg";
-            CartGoods goods1 = new CartGoods(1, "小樱桃", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-            CartGoods goods2 = new CartGoods(2, "火龙果2", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-            CartGoods goods3 = new CartGoods(3, "火龙果3", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-            goodsList.add(goods1);
-            goodsList.add(goods2);
-            goodsList.add(goods3);
+            //如果当前购物车什么都没有
         }
     }
 
@@ -171,17 +166,19 @@ public class CartFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void addCart(MessageEvent event){
-        CartGoods cartGoods = (CartGoods) event.getObject();
-        int flag = isExit(cartGoods.getG_id());
-        //判断购物车是否已经存在
-        if(flag == -1){//购物车中不存在
-            goodsList.add(cartGoods);
-        }else {//购物车中存在
-            goodsList.get(flag).setCount(goodsList.get(flag).getCount()+1);
+        if(event.getStateCode() == NormalGoodsAdapter.ADD_CART){
+            CartGoods cartGoods = (CartGoods) event.getObject();
+            int flag = isExit(cartGoods.getG_id());
+            //判断购物车是否已经存在
+            if(flag == -1){//购物车中不存在
+                goodsList.add(cartGoods);
+            }else {//购物车中存在
+                goodsList.get(flag).setCount(goodsList.get(flag).getCount()+1);
+            }
+            adapter.notifyDataSetChanged();
+            Toast.makeText(getContext(), "添加购物车成功", Toast.LENGTH_SHORT).show();
+            reckonSumMoney();
         }
-        adapter.notifyDataSetChanged();
-        Toast.makeText(getContext(), "添加购物车成功", Toast.LENGTH_SHORT).show();
-        reckonSumMoney();
     }
 
     /**

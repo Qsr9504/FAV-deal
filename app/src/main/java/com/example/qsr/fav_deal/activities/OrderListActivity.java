@@ -63,7 +63,7 @@ public class OrderListActivity extends AppCompatActivity {
     public List<Order> getData() {
         data = new ArrayList<Order>();
         for (int i=0;i<10;i++){
-            data.add(new Order(123465,1,456,350+i*i,"已付款","","",1,null));
+//            data.add(new Order(123465,1,456,350+i*i,"已付款","","",1,null));
         }
         return data;
     }

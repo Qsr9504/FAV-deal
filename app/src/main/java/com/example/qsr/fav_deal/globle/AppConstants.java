@@ -19,8 +19,10 @@ public class AppConstants {
     }
    public interface CONFIG{
        final String IS_GUIDE = "is_guide";//是否已经启动过欢迎界面
+       final String AVATAR_URL = "avatar_url";//头像的url地址
        final String OPEN_UPDATE = "open_update";//是否开启版本更新
        final String CART = "cart";//本地购物车信息
+       final String DEFAULT_ADDRESS = "address";//默认地址
 
        final String USER_ID = "id";//当前用户的id
        final String USER_ACCOUNT = "user_account";//当前用户账户

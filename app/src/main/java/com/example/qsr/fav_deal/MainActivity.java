@@ -3,6 +3,7 @@ package com.example.qsr.fav_deal;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qsr.fav_deal.activities.LoginActivity;
 import com.example.qsr.fav_deal.activities.TypeActivity;
 import com.example.qsr.fav_deal.base.BaseActivity;
 import com.example.qsr.fav_deal.bean.GridViewItem;
@@ -23,8 +25,10 @@ import com.example.qsr.fav_deal.fragments.CartFragment;
 import com.example.qsr.fav_deal.fragments.CenterFragment;
 import com.example.qsr.fav_deal.fragments.DeliverFragment;
 import com.example.qsr.fav_deal.fragments.HomePageFragment;
+import com.example.qsr.fav_deal.globle.AppConstants;
 import com.example.qsr.fav_deal.recycler.adapter.SlidingGridViewAdapter;
 import com.example.qsr.fav_deal.ui.IconFontTextView;
+import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.example.qsr.fav_deal.utils.UIUtils;
 import com.yancy.imageselector.ImageSelector;
 
@@ -84,6 +88,7 @@ public class MainActivity extends BaseActivity {
     GridView typeGridV;
     @Bind(R.id.drawerLayout)
     DrawerLayout drawerLayout;
+    private FragmentManager fm;
     private CartFragment cartFragment;
     private CenterFragment centerFragment;
     private DeliverFragment deliverFragment;
@@ -168,14 +173,27 @@ public class MainActivity extends BaseActivity {
     //打开侧面抽屉
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void open(MessageEvent event) {
-        if (event.getString().equals("1")) {
+        if (event.getStateCode() == HomePageFragment.OPEN_SLIDEING) {
             drawerLayout.openDrawer(Gravity.LEFT);
         }
     }
-
     @Override
-    protected void initView() {
-
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        //    super.onRestoreInstanceState(savedInstanceState);
+    }
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+//        if(savedInstanceState != null){
+//            homeFragment= (HomePageFragment)fm.findFragmentByTag(HomePageFragment.class.getName());
+//            deliverFragment = (DeliverFragment) fm.findFragmentByTag(DeliverFragment.class.getName());
+//            cartFragment = (CartFragment) fm.findFragmentByTag(CartFragment.class.getName());
+//            centerFragment = (CenterFragment) fm.findFragmentByTag(CenterFragment.class.getName());
+//        }else {
+//            homeFragment = new HomePageFragment();
+//            deliverFragment = new DeliverFragment();
+//            cartFragment = new CartFragment();
+//            centerFragment = new CenterFragment();
+//        }
     }
 
     @OnClick({R.id.ll_homePage, R.id.ll_deliver, R.id.ll_cart, R.id.ll_center
@@ -207,7 +225,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setSelect(int i) {
-        FragmentManager fm = getSupportFragmentManager();
+        fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         reSetTab();
         //隐藏当前的fragment
@@ -247,6 +265,10 @@ public class MainActivity extends BaseActivity {
                 cartText.setTextColor(getResources().getColor(R.color.footer_pressBlack));
                 break;
             case 3://个人资料
+                if("=".equals(MySPUtil.getString(AppConstants.CONFIG.USER_ID,"="))){
+                    startActivity(new Intent(this, LoginActivity.class));
+                    finish();
+                }
                 if (centerFragment == null) {
                     centerFragment = new CenterFragment();
                     ft.add(R.id.frameLayout, centerFragment);

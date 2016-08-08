@@ -1,20 +1,22 @@
 package com.example.qsr.fav_deal.bean;
 
+import cn.bmob.v3.BmobObject;
+
 /**************************************
  * FileName : com.example.qsr.fav_deal.bean
  * Author : qsr
  * Time : 2016/7/28 20:37
  * Description : 地址
  **************************************/
-public class Address {
-    private int a_id;//地址的id
-    private int u_id;//购买者用户的id
+public class Address extends BmobObject{
+    private Integer a_id;//地址的id
+    private String u_id;//购买者用户的id
     private String a_phone;//收货人的联系方式
     private String a_default;//是否是默认地址
     private String a_receiver;//收货人姓名
     private String a_detail;//详细的收货地址
 
-    public Address(int a_id, int u_id, String a_phone, String a_default, String a_receiver, String a_detail) {
+    public Address(Integer a_id, String u_id, String a_phone, String a_default, String a_receiver, String a_detail) {
         this.a_id = a_id;
         this.u_id = u_id;
         this.a_phone = a_phone;
@@ -38,19 +40,19 @@ public class Address {
     public Address() {
     }
 
-    public int getA_id() {
+    public Integer getA_id() {
         return a_id;
     }
 
-    public void setA_id(int a_id) {
+    public void setA_id(Integer a_id) {
         this.a_id = a_id;
     }
 
-    public int getU_id() {
+    public String getU_id() {
         return u_id;
     }
 
-    public void setU_id(int u_id) {
+    public void setU_id(String u_id) {
         this.u_id = u_id;
     }
 

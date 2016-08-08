@@ -57,7 +57,7 @@ public class GoodsNormalHolder extends BaseViewHolder<Goods> {
     @Override
     public void bindData(Goods goods) {
         LogUtil.MyLog_e(context,"绑定数据");
-        Picasso.with(context).load(R.drawable.demo4).into(goodsPic);//绑定列表中的缩略图
+        Picasso.with(context).load(goods.getG_pic()).into(goodsPic);//绑定列表中的缩略图
         goodsName.setText(goods.getG_name());//绑定物品名称
         goodsDesc.setText(goods.getG_desc());//绑定物品的描述
         memPrice.setText("会员价:" + goods.getMemb_price() + "￥/份");

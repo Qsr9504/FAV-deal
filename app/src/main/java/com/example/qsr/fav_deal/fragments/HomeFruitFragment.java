@@ -1,24 +1,30 @@
 package com.example.qsr.fav_deal.fragments;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.activities.GoodsDetailActivity;
 import com.example.qsr.fav_deal.base.BaseFragment;
-import com.example.qsr.fav_deal.bean.CartGoods;
-import com.example.qsr.fav_deal.bean.MessageEvent;
+import com.example.qsr.fav_deal.bean.Goods;
 import com.example.qsr.fav_deal.bean.ShowGoods;
+import com.example.qsr.fav_deal.bmobUtil.GoodsTools;
+import com.example.qsr.fav_deal.bmobUtil.MesEventForBmob;
 import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
 import com.example.qsr.fav_deal.recycler.adapter.NormalGoodsAdapter;
 import com.example.qsr.fav_deal.utils.LogUtil;
 import com.loopj.android.http.RequestParams;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +46,7 @@ public class HomeFruitFragment extends BaseFragment {
     private List<ShowGoods> goodsList = null;
     private Intent intent;
     private NormalGoodsAdapter adapter;
+    private GoodsTools goodsTools;
 
     @Override
     protected void initEvent() {
@@ -63,56 +70,25 @@ public class HomeFruitFragment extends BaseFragment {
 
     @Override
     protected void initData(String content, View successView) {
+        LogUtil.MyLog_e(getContext(), "---***" + "进来了oncreat");
+        ButterKnife.bind(this, successView);
+        EventBus.getDefault().register(this);
+        goodsTools = GoodsTools.getInstance(getContext());
         LogUtil.MyLog_e(getContext(), content);
-//        Gson gson = new Gson();
-//        goodsList = gson.fromJson(content,new TypeToken<List<Goods>>(){}.getType());
-        if(goodsList == null)
+        if (goodsList == null)
             initData();//用于没有网络的时候死数据
-
-//        MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(getContext(),goodsList) {
-//            @Override
-//            public void addBtnClick(View v, Goods goods) {
-//                Toast.makeText(getContext(),goods.toString(),Toast.LENGTH_SHORT).show();
-//                intent = new Intent(getContext(),GoodsDetailActivity.class);
-//                startActivity(intent);
-//            }
-//
-//            @Override
-//            public void item_LLClick(View v, Goods goods) {
-//            }
-//        };
-//        fruitRecyclerView.setAdapter(adapter);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
-//        fruitRecyclerView.setLayoutManager(linearLayoutManager);
-
-
-//        HomeListAdapter adapter = new HomeListAdapter(getContext(),goodsList) {
-//            @Override
-//            public void addBtnClick(View v, Goods goods) {
-//                //添加至购物车操作
-//                Toast.makeText(getContext(),goods.toString(),Toast.LENGTH_SHORT).show();
-//            }
-//        };
-//        fruit_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(view.getContext(),goodsList.get(position).toString(),Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(view.getContext(),GoodsDetailActivity.class);
-//                bundle.putSerializable("good",goodsList.get(position));
-//                intent.putExtra("fruit_detail",bundle);
-//                startActivity(intent);
-//            }
-//        });
         refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        //下拉刷新监听
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                goodsList.add(new ShowGoods(100, "下拉刷新来的", ""+R.mipmap.ic_launcher, ""+R.mipmap.ic_launcher, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", ""));
-                fruitRecyclerView.setAdapter(adapter);
+                goodsList.clear();
+                goodsTools.getAllFruit();
                 refresh.setRefreshing(false);
             }
         });
         adapter = new NormalGoodsAdapter(getContext(), goodsList);
+        //设置监听事件
         adapter.setOnRecyclerViewListener(new OnRecyclerViewListener() {
             @Override
             public void onItemClick(int position) {
@@ -146,6 +122,21 @@ public class HomeFruitFragment extends BaseFragment {
         fruitRecyclerView.setAdapter(adapter);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void fruitList(MesEventForBmob eventForBmob) {
+        int code = eventForBmob.getStateCode();
+        if (code == GoodsTools.ALL_FRUIT_SUCC) {
+            LogUtil.MyLog_e(getContext(), "已经准备转换");
+            List<Goods> list = (List<Goods>) eventForBmob.getObject();
+            LogUtil.MyLog_e(getContext(), list.toString());
+            goodsList.addAll(Goods.GoodsToShowGoods(list));
+            LogUtil.MyLog_e(getContext(), goodsList.toString());
+            fruitRecyclerView.setAdapter(adapter);
+        } else if (code == GoodsTools.ALL_FRUIT_ERROR) {
+            Toast.makeText(getContext(), "获取水果列表失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     protected void initTitle() {
 
@@ -153,27 +144,8 @@ public class HomeFruitFragment extends BaseFragment {
 
     private void initData() {
         goodsList = new ArrayList<ShowGoods>();
-        String picUrl = "http://file.bmob.cn/M01/E1/9C/oYYBAFePPU6ADBA2AAAdNdM4_BM149.jpg";
-        ShowGoods goods1 = new ShowGoods(1, "小樱桃", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-        ShowGoods goods2 = new ShowGoods(2, "火龙果2", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-        ShowGoods goods3 = new ShowGoods(3, "火龙果3", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-        ShowGoods goods4 = new ShowGoods(4, "火龙果4", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-        ShowGoods goods5 = new ShowGoods(5, "火龙果5", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-        ShowGoods goods6 = new ShowGoods(6, "火龙果6", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-        ShowGoods goods7 = new ShowGoods(7, "火龙果7", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-        ShowGoods goods8 = new ShowGoods(8, "火龙果8", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-        ShowGoods goods9 = new ShowGoods(9, "火龙果9", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-        ShowGoods goods10 = new ShowGoods(10, "火龙果10", picUrl, picUrl, "肉质鲜嫩，清脆多汁", "13.29", "13.99", 0, 0, 0, "", "");
-        goodsList.add(goods1);
-        goodsList.add(goods2);
-        goodsList.add(goods3);
-        goodsList.add(goods4);
-        goodsList.add(goods5);
-        goodsList.add(goods6);
-        goodsList.add(goods7);
-        goodsList.add(goods8);
-        goodsList.add(goods9);
-        goodsList.add(goods10);
+        goodsTools.getAllFruit();
+        //可添加sqlite数据库缓存
     }
 
 
@@ -182,5 +154,4 @@ public class HomeFruitFragment extends BaseFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
 }

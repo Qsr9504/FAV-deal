@@ -5,15 +5,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.bean.Address;
 import com.example.qsr.fav_deal.bean.MessageEvent;
+import com.example.qsr.fav_deal.bmobUtil.AddressTools;
+import com.example.qsr.fav_deal.bmobUtil.MesEventForBmob;
+import com.example.qsr.fav_deal.globle.AppConstants;
 import com.example.qsr.fav_deal.recycler.OnEditOrDeleteListener;
 import com.example.qsr.fav_deal.recycler.adapter.AddressAdapter;
 import com.example.qsr.fav_deal.ui.IconFontTextView;
+import com.example.qsr.fav_deal.utils.MySPUtil;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,28 +38,26 @@ public class AddressListActivity extends AppCompatActivity {
     @Bind(R.id.addreRecycle)
     RecyclerView addreRecycle;
     private List<Address> addressList = null;
+    private AddressTools addressTools;
+    private AddressAdapter adapter;
+    public static final int RETURN_ADDRESS = 23;//返回数据
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_list);
         ButterKnife.bind(this);
+        addressTools = AddressTools.getInstance(this);
+        EventBus.getDefault().register(this);
         initData();
     }
 
     private void initData() {
         //获取本地收货地址
-        if(addressList == null){//如果是空的，就显示测试数据
+        if(addressList == null){
             addressList = new ArrayList<Address>();
-            addressList.add(new Address(1,1,"15171858","1","李清照","江省南昌市双港路1180号"));
-            addressList.add(new Address(1,1,"15655858","","李清照1","江西省南昌市双港路1180号"));
-            addressList.add(new Address(1,1,"16494188","","李清照2","江西南昌市双港路1180号"));
-            addressList.add(new Address(1,1,"15994618","","李清照3","江西省南市双港路1180号"));
-            addressList.add(new Address(1,1,"946158","","李清照4","江省南昌市港路1180号"));
-            addressList.add(new Address(1,1,"15616158","","李清照5","江西省南昌市港路1180号"));
-            addressList.add(new Address(1,1,"159616158","","李清照6","江西南昌市双港路1180号"));
-            addressList.add(new Address(1,1,"1599466158","","李清照7","江西省南昌双港路1180号"));
+            addressTools.getAllAddress(MySPUtil.getString(AppConstants.CONFIG.USER_ID));
         }
-        AddressAdapter adapter = new AddressAdapter(AddressListActivity.this,addressList);
+        adapter = new AddressAdapter(AddressListActivity.this,addressList);
         adapter.setOnEditOrDeleteListener(new OnEditOrDeleteListener() {
             @Override
             public void onDelete(int position) {
@@ -66,6 +71,7 @@ public class AddressListActivity extends AppCompatActivity {
             public void onItemClick(int position) {
                 MessageEvent event = new MessageEvent();
                 event.setObject(addressList.get(position));
+                event.setStateCode(RETURN_ADDRESS);
                 EventBus.getDefault().post(event);
                 finish();
             }
@@ -83,7 +89,21 @@ public class AddressListActivity extends AppCompatActivity {
     public void addAddress(){
         //弹出自定义的dialog
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void addreMana(MesEventForBmob eventForBmob) {
+        int code = eventForBmob.getStateCode();
+        if (code == AddressTools.ALL_ADDRESS_SUCC) {
+            addressList.clear();
+            //获取所有的地址列表成功
+            addressList.addAll((List<Address>) eventForBmob.getObject());
+            adapter.notifyDataSetChanged();
 
+        } else if (code == AddressTools.ALL_ADDRESS_ERROR) {
+            //获取所有的地址列表错误
+            Toast.makeText(this, "获取列表失败", Toast.LENGTH_SHORT).show();
+
+        }
+    }
     @Override
     protected void onPause() {
         super.onPause();

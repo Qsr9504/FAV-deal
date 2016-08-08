@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.bean.Address;
+import com.example.qsr.fav_deal.utils.TextUtil;
 
 /**************************************
  * FileName : com.example.qsr.fav_deal.ui
@@ -27,13 +28,15 @@ public class AddressDialog extends Dialog {
     public void setOnDialogListener(OnDialogListener onDialogListener) {
         this.onDialogListener = onDialogListener;
     }
+
     public void setData(Address address) {
-        if(address != null) {
+        if (address != null) {
             name.setText(address.getA_receiver());
             phone.setText(address.getA_phone());
             detail.setText(address.getA_detail());
         }
     }
+
     public Address getData() {
         Address address = new Address();
         address.setA_receiver(name.getText().toString());
@@ -60,7 +63,7 @@ public class AddressDialog extends Dialog {
     }
 
     private void initView(Context context) {
-        View view = View.inflate(context, R.layout.address_dialog,null);
+        View view = View.inflate(context, R.layout.address_dialog, null);
         setContentView(view);
         setTitle("地址管理");
         setCanceledOnTouchOutside(false);//设置对话框点击空白部分不消失

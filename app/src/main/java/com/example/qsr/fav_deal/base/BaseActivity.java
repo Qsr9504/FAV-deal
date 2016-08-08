@@ -39,7 +39,7 @@ public abstract class BaseActivity extends FragmentActivity{
         ButterKnife.bind(this);
         message = Message.obtain();
         activity_bundle = new Bundle();
-        initView();
+        initView(savedInstanceState);
         initData();
     }
 
@@ -47,5 +47,5 @@ public abstract class BaseActivity extends FragmentActivity{
 
     protected abstract void initData();
 
-    protected abstract void initView();
+    protected abstract void initView(@Nullable Bundle savedInstanceState);
 }

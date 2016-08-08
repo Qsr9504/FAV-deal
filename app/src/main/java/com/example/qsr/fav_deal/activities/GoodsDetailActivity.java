@@ -3,12 +3,10 @@ package com.example.qsr.fav_deal.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qsr.fav_deal.R;
-import com.example.qsr.fav_deal.bean.CartGoods;
 import com.example.qsr.fav_deal.bean.ShowGoods;
 import com.loopj.android.http.AsyncHttpClient;
 import com.squareup.picasso.Picasso;
@@ -27,8 +25,8 @@ public class GoodsDetailActivity extends Activity {
     TextView memPrice;
     @Bind(R.id.nor_price)
     TextView norPrice;
-    @Bind(R.id.goods_detailsList)
-    RecyclerView goodsDetailsList;
+    @Bind(R.id.detailPic)
+    ImageView detailPic;
     private ShowGoods goods = new ShowGoods();
     private AsyncHttpClient client = new AsyncHttpClient();
 
@@ -44,7 +42,8 @@ public class GoodsDetailActivity extends Activity {
     }
 
     private void initData() {
-        Picasso.with(GoodsDetailActivity.this).load(R.drawable.demo3).into(goodsPic);
+        Picasso.with(GoodsDetailActivity.this).load(goods.getG_pic()).into(goodsPic);
+        Picasso.with(GoodsDetailActivity.this).load(goods.getG_detailUrl()).into(detailPic);
         goodsName.setText(goods.getG_name());
         goodsDesc.setText(goods.getG_desc());
         memPrice.setText("会员价:" + goods.getMemb_price() + "￥/份");

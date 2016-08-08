@@ -12,9 +12,6 @@ import android.widget.Toast;
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.bmobUtil.bean.Feedback;
 import com.example.qsr.fav_deal.utils.TextUtil;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -1,19 +1,14 @@
-package com.example.qsr.fav_deal.bean;
-
-import com.example.qsr.fav_deal.bmobUtil.bean.BmobOrder;
-import com.google.gson.Gson;
-
-import java.util.List;
+package com.example.qsr.fav_deal.bmobUtil.bean;
 
 import cn.bmob.v3.BmobObject;
 
 /**************************************
- * FileName : com.example.qsr.fav_deal.bean
+ * FileName : com.example.qsr.fav_deal.bmobUtil.bean
  * Author : qsr
- * Time : 2016/7/28 20:30
- * Description : 订单
+ * Time : 2016/8/8 13:01
+ * Description :
  **************************************/
-public class Order extends BmobObject{
+public class BmobOrder extends BmobObject {
     private String o_id;//订单的唯一标识
     private String u_id;//订单所属的用户id
     private String time;//订单时间
@@ -22,7 +17,22 @@ public class Order extends BmobObject{
     private String o_judge;//本订单的用户评价
     private String o_note;//本订单的用户备注
     private String a_id;//地址的id
-    private List<CartItem> list;//订单中的物品详情
+    private String GoodsDetail;//购物车中物品json字符串
+
+    @Override
+    public String toString() {
+        return "BmobOrder{" +
+                "o_id=" + o_id +
+                ", u_id='" + u_id + '\'' +
+                ", time=" + time +
+                ", o_money=" + o_money +
+                ", o_state='" + o_state + '\'' +
+                ", o_judge='" + o_judge + '\'' +
+                ", o_note='" + o_note + '\'' +
+                ", a_id=" + a_id +
+                ", GoodsDetail='" + GoodsDetail + '\'' +
+                '}';
+    }
 
     public String getO_id() {
         return o_id;
@@ -88,30 +98,20 @@ public class Order extends BmobObject{
         this.a_id = a_id;
     }
 
-    public List<CartItem> getList() {
-        return list;
+    public String getGoodsDetail() {
+        return GoodsDetail;
     }
 
-    public void setList(List<CartItem> list) {
-        this.list = list;
+    public void setGoodsDetail(String goodsDetail) {
+        GoodsDetail = goodsDetail;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "o_id=" + o_id +
-                ", u_id=" + u_id +
-                ", time=" + time +
-                ", o_money=" + o_money +
-                ", o_state='" + o_state + '\'' +
-                ", o_judge='" + o_judge + '\'' +
-                ", o_note='" + o_note + '\'' +
-                ", a_id=" + a_id +
-                ", list=" + list +
-                '}';
+    public BmobOrder() {
+
     }
 
-    public Order(String o_id, String u_id, String time, Integer o_money, String o_state, String o_judge, String o_note, String a_id, List<CartItem> list) {
+    public BmobOrder(String o_id, String u_id, String time, Integer o_money, String o_state, String o_judge, String o_note, String a_id, String goodsDetail) {
+
         this.o_id = o_id;
         this.u_id = u_id;
         this.time = time;
@@ -120,23 +120,6 @@ public class Order extends BmobObject{
         this.o_judge = o_judge;
         this.o_note = o_note;
         this.a_id = a_id;
-        this.list = list;
-    }
-
-    public Order() {
-    }
-
-    public BmobOrder toBmobOrder(Order order) {
-        BmobOrder bmobOrder = new BmobOrder();
-        bmobOrder.setU_id(order.getU_id());
-        bmobOrder.setA_id(order.getA_id());
-        bmobOrder.setTime(order.getTime());
-        bmobOrder.setO_money(order.getO_money());
-        bmobOrder.setO_state(order.getO_state());
-        bmobOrder.setO_judge(order.getO_judge());
-        bmobOrder.setO_note(order.getO_note());
-        Gson gson = new Gson();
-        bmobOrder.setGoodsDetail(gson.toJson(order.getList()));
-        return bmobOrder;
+        GoodsDetail = goodsDetail;
     }
 }

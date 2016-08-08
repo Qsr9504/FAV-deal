@@ -23,6 +23,7 @@ import com.example.qsr.fav_deal.ui.GlideLoader;
 import com.example.qsr.fav_deal.ui.IconFontTextView;
 import com.example.qsr.fav_deal.ui.MyAvatarImageView;
 import com.example.qsr.fav_deal.utils.ImageUtil;
+import com.example.qsr.fav_deal.utils.LogUtil;
 import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.loopj.android.http.RequestParams;
 import com.squareup.picasso.Picasso;
@@ -33,6 +34,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -40,6 +42,8 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.UploadFileListener;
 
 /**************************************
  * FileName : com.example.qsr.fav_deal.fragments
@@ -115,11 +119,35 @@ public class CenterFragment extends BaseFragment {
             FileInputStream fis = new FileInputStream(avatarUrl);
             bitmap = BitmapFactory.decodeStream(fis);
             avatar.setImageBitmap(ImageUtil.comp(bitmap));
-//                  保存到服务器以及本地xml更新
-//            saveChangeToServer();
+//保存到服务器以及本地xml更新
+            saveChangeToServer(avatarUrl);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveChangeToServer(String url) {
+        String picPath = url;
+        LogUtil.MyLog_e(getContext(),"本地图片地址:***"+url+"***");
+        final BmobFile bmobFile = new BmobFile(new File(picPath));
+        bmobFile.uploadblock(getContext(), new UploadFileListener() {
+
+            @Override
+            public void onSuccess() {
+                //bmobFile.getFileUrl(context)--返回的上传文件的完整地址
+                LogUtil.MyLog_e(getContext(),"上传成功"+bmobFile.getFileUrl(getContext()));
+                MySPUtil.save(AppConstants.CONFIG.AVATAR_URL,bmobFile.getFileUrl(getContext()));
+            }
+
+            @Override
+            public void onProgress(Integer value) {
+                // 返回的上传进度（百分比）
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+            }
+        });
     }
 
     private void showChangePic() {
@@ -164,14 +192,20 @@ public class CenterFragment extends BaseFragment {
             MySPUtil.save(AppConstants.CONFIG.OPEN_UPDATE, true);
             llcenter6Text.setText("Opened");
         }
-
     }
 
     @Override
     protected void initData(String content, View successView) {
         EventBus.getDefault().register(this);
+        String picUrl = MySPUtil.getString(AppConstants.CONFIG.AVATAR_URL,".");
+        if(".".equals(picUrl)){
+            //当前不存在头像缓存
+            Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(avatar);
+        }else {
+            //有缓存时
+            Picasso.with(getContext()).load(picUrl).error(R.mipmap.ic_launcher).into(avatar);
+        }
         //初始化界面的值
-        Picasso.with(getContext()).load(R.drawable.demo4).error(R.mipmap.ic_launcher).into(avatar);
         llcenter6Text.setText(MySPUtil.getBoolean(AppConstants.CONFIG.OPEN_UPDATE,false) == false ? "Closed" : "Opened");
     }
 

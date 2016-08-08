@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.activities.TypeActivity;
 import com.example.qsr.fav_deal.bean.Goods;
+import com.example.qsr.fav_deal.bmobUtil.GoodsTools;
 import com.example.qsr.fav_deal.ui.randomLayout.StellarMap;
 import com.example.qsr.fav_deal.utils.UIUtils;
 
@@ -36,6 +37,7 @@ public class HomeCommFragment extends Fragment {
     private Random random;
     private Intent intent;
     private Bundle bundle = new Bundle();
+    private GoodsTools goodsTools;
     private String[] one = new String[8];
 
     private String[] two = new String[8];
@@ -49,6 +51,7 @@ public class HomeCommFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = UIUtils.getXmlView(R.layout.fragment_home_comm);
         ButterKnife.bind(this, view);
+        goodsTools = GoodsTools.getInstance(getContext());
         initData();
         return view;
     }

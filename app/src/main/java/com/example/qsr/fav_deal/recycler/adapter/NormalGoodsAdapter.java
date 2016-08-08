@@ -33,6 +33,7 @@ public class NormalGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private ShowGoods showGoods;
     private Context context;
     private OnRecyclerViewListener onRecyclerViewListener;
+    public static final int ADD_CART = 31;//添加至购物车
     public NormalGoodsAdapter(Context context, List<ShowGoods> goodsList) {
         this.context = context;
         this.goodsList = goodsList;
@@ -100,6 +101,7 @@ public class NormalGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         else {
             CartGoods cartGoods = showGoods.showGoodsToCartGoods(showGoods);
             MessageEvent event = new MessageEvent();
+            event.setStateCode(ADD_CART);
             event.setObject(cartGoods);
             EventBus.getDefault().post(event);
         }

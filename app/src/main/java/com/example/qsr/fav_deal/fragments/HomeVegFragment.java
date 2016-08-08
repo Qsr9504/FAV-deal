@@ -2,8 +2,7 @@ package com.example.qsr.fav_deal.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,13 +13,19 @@ import android.widget.Toast;
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.activities.GoodsDetailActivity;
 import com.example.qsr.fav_deal.base.BaseFragment;
+import com.example.qsr.fav_deal.bean.Goods;
 import com.example.qsr.fav_deal.bean.ShowGoods;
+import com.example.qsr.fav_deal.bmobUtil.GoodsTools;
+import com.example.qsr.fav_deal.bmobUtil.MesEventForBmob;
 import com.example.qsr.fav_deal.recycler.OnRecyclerViewListener;
 import com.example.qsr.fav_deal.recycler.adapter.NormalGoodsAdapter;
-import com.example.qsr.fav_deal.utils.UIUtils;
+import com.example.qsr.fav_deal.utils.LogUtil;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +42,14 @@ import butterknife.ButterKnife;
 public class HomeVegFragment extends BaseFragment {
     @Bind(R.id.veg_recyclerView)
     RecyclerView vegRecyclerView;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
     private List<ShowGoods> goodsList = null;
     private Intent intent;
     private NormalGoodsAdapter adapter;
     private AsyncHttpClient client;
     private Bundle bundle = new Bundle();
+    private GoodsTools goodsTools;
 
     @Override
     protected void initEvent() {
@@ -68,9 +76,19 @@ public class HomeVegFragment extends BaseFragment {
     @Override
     protected void initData(String content, View successView) {
         ButterKnife.bind(this, successView);
-        if (goodsList == null)//测试数据使用
+        EventBus.getDefault().register(this);
+        goodsTools = GoodsTools.getInstance(getContext());
+        if (goodsList == null)
             getData();
-        adapter = new NormalGoodsAdapter(getContext(),goodsList);
+        adapter = new NormalGoodsAdapter(getContext(), goodsList);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                goodsList.clear();
+                goodsTools.getAllVeg();
+                refresh.setRefreshing(false);
+            }
+        });
         adapter.setOnRecyclerViewListener(new OnRecyclerViewListener() {
             @Override
             public void onItemClick(int position) {
@@ -104,6 +122,21 @@ public class HomeVegFragment extends BaseFragment {
         vegRecyclerView.setAdapter(adapter);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void vegList(MesEventForBmob eventForBmob) {
+        int code = eventForBmob.getStateCode();
+        if (code == GoodsTools.ALL_VEG_SUCC) {
+            LogUtil.MyLog_e(getContext(), "已经准备转换");
+            List<Goods> list = (List<Goods>) eventForBmob.getObject();
+            LogUtil.MyLog_e(getContext(), list.toString());
+            goodsList.addAll(Goods.GoodsToShowGoods(list));
+            LogUtil.MyLog_e(getContext(), goodsList.toString());
+            vegRecyclerView.setAdapter(adapter);
+        } else if (code == GoodsTools.ALL_VEG_ERROR){
+            Toast.makeText(getContext(), "获取蔬菜列表失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     protected void initTitle() {
 
@@ -111,13 +144,12 @@ public class HomeVegFragment extends BaseFragment {
 
     private void getData() {
         goodsList = new ArrayList<ShowGoods>();
-        //用作测试数据
-        String picUrl = "http://file.bmob.cn/M01/E1/9C/oYYBAFePPU6ADBA2AAAdNdM4_BM149.jpg";
-        ShowGoods goods1 = new ShowGoods(101, "蔬菜"+1, picUrl, picUrl, "肉质鲜嫩，清脆多汁", "9.99", "20.1", 0, 0, 0, "", "");
-        ShowGoods goods2 = new ShowGoods(102, "蔬菜"+2, picUrl, picUrl, "肉质鲜嫩，清脆多汁", "9.99", "25.3", 0, 0, 0, "", "");
-        ShowGoods goods3 = new ShowGoods(103, "蔬菜"+3, picUrl, picUrl, "肉质鲜嫩，清脆多汁", "3.99", "18.31", 0, 0, 0, "", "");
-        goodsList.add(goods1);
-        goodsList.add(goods2);
-        goodsList.add(goods3);
+        goodsTools.getAllVeg();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

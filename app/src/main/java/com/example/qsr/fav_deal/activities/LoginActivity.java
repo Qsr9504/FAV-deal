@@ -17,6 +17,7 @@ import com.example.qsr.fav_deal.MainActivity;
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.bean.User;
 import com.example.qsr.fav_deal.globle.AppConstants;
+import com.example.qsr.fav_deal.utils.LogUtil;
 import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.example.qsr.fav_deal.utils.TextUtil;
 

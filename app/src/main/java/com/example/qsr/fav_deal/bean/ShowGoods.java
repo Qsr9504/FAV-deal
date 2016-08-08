@@ -11,6 +11,11 @@ public class ShowGoods extends Goods{
     private final int TYPE_ADVERT = 1;//表示使用的横向的一个广告栏展示
     private int showType = 0;//设置商品展示的类型
 
+    public ShowGoods(int showType) {
+        super();
+        this.showType = showType;
+    }
+
     public int getShowType() {
         return showType;
     }
