@@ -42,7 +42,7 @@ public class OrderListHolder extends BaseViewHolder {
     @Override
     public void bindData(Object o) {
         Order order = (Order) o;
-        orderCode.setText("订单编号为:" + order.getO_id());
+        orderCode.setText("订单编号为:" + order.getObjectId());
         orderTime.setText("下单时间为:" + order.getTime());
         orderState.setText("订单状态为:" + order.getO_state());
         orderSum.setText(order.getO_money() + "元");

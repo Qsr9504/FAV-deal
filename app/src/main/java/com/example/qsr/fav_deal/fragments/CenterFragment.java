@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.activities.AddressManageActivity;
@@ -17,6 +18,8 @@ import com.example.qsr.fav_deal.activities.FeedbackActivity;
 import com.example.qsr.fav_deal.activities.OrderListActivity;
 import com.example.qsr.fav_deal.base.BaseFragment;
 import com.example.qsr.fav_deal.bean.MessageEvent;
+import com.example.qsr.fav_deal.bean.User;
+import com.example.qsr.fav_deal.bmobUtil.OrderTools;
 import com.example.qsr.fav_deal.globle.App;
 import com.example.qsr.fav_deal.globle.AppConstants;
 import com.example.qsr.fav_deal.ui.GlideLoader;
@@ -42,6 +45,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.UploadFileListener;
 
@@ -78,7 +82,7 @@ public class CenterFragment extends BaseFragment {
     private static final int REQUEST_CODE = 10086;
     private Intent intent;
     private Bitmap bitmap;
-
+    private OrderTools orderTools;
     @Override
     protected void initEvent() {
 
@@ -178,7 +182,12 @@ public class CenterFragment extends BaseFragment {
     public void llcenter_1(View v) {
         //订单管理
         intent = new Intent(getContext(), OrderListActivity.class);
+        orderTools.allOrder();
         startActivity(intent);
+    }
+    @OnClick(R.id.llcenter_4)
+    public void llcenter_4(View v) {
+        Toast.makeText(getContext(),"当前的积分为:" + BmobUser.getCurrentUser(getContext(),User.class).getU_integra()+"",Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.llcenter_6)
@@ -197,6 +206,7 @@ public class CenterFragment extends BaseFragment {
     @Override
     protected void initData(String content, View successView) {
         EventBus.getDefault().register(this);
+        orderTools = OrderTools.getInstance(getContext());
         String picUrl = MySPUtil.getString(AppConstants.CONFIG.AVATAR_URL,".");
         if(".".equals(picUrl)){
             //当前不存在头像缓存

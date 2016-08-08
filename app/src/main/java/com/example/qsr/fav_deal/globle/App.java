@@ -47,8 +47,8 @@ public class App extends Application{
         MySPUtil.getInstance();
         //log信息是否打印
         LogUtil.openLog(true);
-//        //全局异常捕获处理器
-//        AppCrashHandle.getInstance().init(this);
+        //全局异常捕获处理器
+        AppCrashHandle.getInstance().init(this);
         //网络切换监听器
     }
 }

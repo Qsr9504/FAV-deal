@@ -1,5 +1,6 @@
 package com.example.qsr.fav_deal.activities;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,11 +10,21 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.qsr.fav_deal.R;
+import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.bean.Order;
+import com.example.qsr.fav_deal.bmobUtil.MesEventForBmob;
+import com.example.qsr.fav_deal.bmobUtil.OrderTools;
 import com.example.qsr.fav_deal.recycler.OnEditOrDeleteListener;
 import com.example.qsr.fav_deal.recycler.adapter.OrderListAdapter;
 import com.example.qsr.fav_deal.ui.IconFontTextView;
+import com.example.qsr.fav_deal.utils.ImageUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,15 +39,16 @@ public class OrderListActivity extends AppCompatActivity {
     @Bind(R.id.orderlistRecycle)
     RecyclerView orderlistRecycle;
     private List<Order> data;
-
+    private OrderListAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_order_list);
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this);
-
-        OrderListAdapter adapter = new OrderListAdapter(OrderListActivity.this, getData());
+        data = new ArrayList<Order>();
+        adapter = new OrderListAdapter(OrderListActivity.this, data);
         adapter.setOnEditOrDeleteListener(new OnEditOrDeleteListener() {
             @Override
             public void onDelete(int position) {
@@ -59,12 +71,15 @@ public class OrderListActivity extends AppCompatActivity {
     public void back(View view){
         finish();
     }
-
-    public List<Order> getData() {
-        data = new ArrayList<Order>();
-        for (int i=0;i<10;i++){
-//            data.add(new Order(123465,1,456,350+i*i,"已付款","","",1,null));
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void setAvatarFromRes(MesEventForBmob event) {
+        int code = event.getStateCode();
+        if(code == OrderTools.ALL_ORDER_SUCC){
+            data.clear();
+            data.addAll((List<Order>) event.getObject());
+            orderlistRecycle.setAdapter(adapter);
+        }else if(code == OrderTools.ALL_ORDER_FAIL){
+            Toast.makeText(getApplicationContext(),"获取失败",Toast.LENGTH_SHORT).show();
         }
-        return data;
     }
 }

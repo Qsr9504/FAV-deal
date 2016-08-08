@@ -1,10 +1,13 @@
 package com.example.qsr.fav_deal.globle;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.qsr.fav_deal.MainActivity;
 
 /**************************************
  * FileName : com.example.qsr.fav_deal.globle
