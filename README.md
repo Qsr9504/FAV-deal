@@ -50,5 +50,10 @@ PackageManager manager = context.getPackageManager();
   ```java 
   1.使用的是安卓自带的DrawerLayout，并写了一个Drawlayout的demo，其中有一些注意事项，有兴趣的可以去看一下
   ```
-  
+
+## 第五部分：推荐列表的实现
+![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/推荐列表.gif)
+  ```java 
+  1.使用的是封装出来的控件randomLayout，也会写成demo分享。
+  ```
   
