@@ -78,3 +78,46 @@ PackageManager manager = context.getPackageManager();
   1.主要是对bmob后端云的一个数据操作
   2.使用了RecyclerView和CardView
   ```
+## 第九部分：本地图库和照相机选取头像
+![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/头像本地选择和拍照上传bmob.gif)
+  ```java 
+  1.主要使用了compile 'com.yancy.imageselector:imageselector:1.3.3'  谢谢原始作者。
+  2.bmob上传图片的一些操作封装
+  ```
+  
+##第十部份：用户反馈
+![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/反馈.gif)
+
+##本次项目使用的框架有：
+  ```java 
+  1.//图片加载
+    - picasso 
+    - facebook.fresco
+  2.//工具
+    - jakewharton:butterknife:7.0.1
+  3.//网络
+    - async-http
+  4.//指示器
+    - ViewPagerIndicator
+    - compile 'com.github.chenupt.android:springindicator:1.0.2@aar'
+    - //水滴指示器compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+  5.//json
+    - Gson
+  6.//列表
+    - recyclerview
+    - cardview
+    - design
+  7.数据传递
+    - eventbus
+  8.头像选择器
+    - compile 'com.yancy.imageselector:imageselector:1.3.3'
+  9.后端云服务器
+    - Bmob
+    -//bmob后端云所需
+      - compile 'cn.bmob.android:http-legacy:1.0'//兼容6.0
+      - compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
+  感谢以上所有的github开源框架。
+    
+  ```
+
+
