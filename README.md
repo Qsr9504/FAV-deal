@@ -57,3 +57,13 @@ PackageManager manager = context.getPackageManager();
   1.使用的是封装出来的控件randomLayout，也会写成demo分享。
   ```
   
+## 第六部分：购物车的功能实现
+![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/购物车一键清空和重复物品的判断.gif)
+  ```java 
+  1.使用自定义popwindow写长按删除该物品。
+  2.物品数量最低为1的验证，
+  3.计算当前购物车的总价，以及优惠的价格，（用户默认为会员）
+  4.一键清空购物车操作
+  5.提交订单时二次用户是否登陆的验证
+  ```
+
