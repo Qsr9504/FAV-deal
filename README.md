@@ -72,3 +72,9 @@ PackageManager manager = context.getPackageManager();
   1.主要就是两个界面间集合的传递，我此处用了Gson，json
   ```
   
+## 第八部分：收货地址的增删改查，（必须要登陆）
+![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/地址管理的增删改查.gif)
+  ```java 
+  1.主要是对bmob后端云的一个数据操作
+  2.使用了RecyclerView和CardView
+  ```
