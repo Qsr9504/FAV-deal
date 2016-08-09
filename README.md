@@ -31,9 +31,13 @@ PackageManager manager = context.getPackageManager();
   1.基本的空字符串的验证，其他验证不想写了
   
 ## 第三部分：物品列表和详情
-![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/物品详情和添加购物车.gif)
+![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/添加购物车.gif)
+![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/游客添加购物车过滤.gif)
   1.查看物品，有下拉刷新功能，使用的是安卓自带的SwipeRefreshLayout
   2.添加购物车，已经做了重复物品添加的判断，当有重复物品添加时，购物车会将物品数量增加一个
   3.查看物品详情界面，使用了自定义的ScollView，实现仿ios回弹的效果
   4.实现大图加载的压缩，尺寸和质量双重压缩。防止oom
+  5.游客添加购物车的过滤，（判断本地sp是否存有用户信息）
+  
+
   
