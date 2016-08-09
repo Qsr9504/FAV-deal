@@ -34,7 +34,7 @@ PackageManager manager = context.getPackageManager();
   1.基本的空字符串的验证，其他验证不想写了
   ```
   
-## 第三部分：物品列表和详情
+## 第三部分：物品列表和详情\添加购物车
 ![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/添加购物车.gif)
 ![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/游客添加购物车过滤.gif)
   ```java 
@@ -45,5 +45,10 @@ PackageManager manager = context.getPackageManager();
   5.游客添加购物车的过滤，（判断本地sp是否存有用户信息）
   ```
   
-
+## 第四部分：抽屉侧滑，分类果蔬的查看
+![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/抽屉分类果蔬.gif)
+  ```java 
+  1.使用的是安卓自带的DrawerLayout，并写了一个Drawlayout的demo，其中有一些注意事项，有兴趣的可以去看一下
+  ```
+  
   
