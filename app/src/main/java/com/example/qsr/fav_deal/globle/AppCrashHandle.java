@@ -86,6 +86,7 @@ public class AppCrashHandle implements Thread.UncaughtExceptionHandler {
         new Thread() {
             @Override
             public void run() {
+                //可以收集bug信息上传至服务器，以便后期完善
                 Log.e("qsr", "deviceInfo:" + deviceInfo + "\n" + "errorInfo:" + errorInfo);
             }
         }.start();

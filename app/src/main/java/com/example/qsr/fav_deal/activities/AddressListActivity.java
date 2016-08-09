@@ -40,7 +40,7 @@ public class AddressListActivity extends AppCompatActivity {
     private List<Address> addressList = null;
     private AddressTools addressTools;
     private AddressAdapter adapter;
-    public static final int RETURN_ADDRESS = 23;//返回数据
+    public static final int RETURN_ADDRESS = 50;//返回数据
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +69,7 @@ public class AddressListActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(int position) {
-                MessageEvent event = new MessageEvent();
+                MesEventForBmob event = new MesEventForBmob();
                 event.setObject(addressList.get(position));
                 event.setStateCode(RETURN_ADDRESS);
                 EventBus.getDefault().post(event);

@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qsr.fav_deal.MainActivity;
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.activities.AddressManageActivity;
 import com.example.qsr.fav_deal.activities.FeedbackActivity;
@@ -19,6 +20,7 @@ import com.example.qsr.fav_deal.activities.OrderListActivity;
 import com.example.qsr.fav_deal.base.BaseFragment;
 import com.example.qsr.fav_deal.bean.MessageEvent;
 import com.example.qsr.fav_deal.bean.User;
+import com.example.qsr.fav_deal.bmobUtil.MesEventForBmob;
 import com.example.qsr.fav_deal.bmobUtil.OrderTools;
 import com.example.qsr.fav_deal.globle.App;
 import com.example.qsr.fav_deal.globle.AppConstants;
@@ -117,17 +119,20 @@ public class CenterFragment extends BaseFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void setAvatarFromRes(MessageEvent event) {
-        String avatarUrl = event.getString();
-        try {
-            FileInputStream fis = new FileInputStream(avatarUrl);
-            bitmap = BitmapFactory.decodeStream(fis);
-            avatar.setImageBitmap(ImageUtil.comp(bitmap));
+    public void setAvatarFromRes(MesEventForBmob event) {
+        if(event.getStateCode() == MainActivity.AVATAR){
+            String avatarUrl = event.getString();
+            try {
+                FileInputStream fis = new FileInputStream(avatarUrl);
+                bitmap = BitmapFactory.decodeStream(fis);
+                avatar.setImageBitmap(ImageUtil.comp(bitmap));
 //保存到服务器以及本地xml更新
-            saveChangeToServer(avatarUrl);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+                saveChangeToServer(avatarUrl);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     private void saveChangeToServer(String url) {

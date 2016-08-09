@@ -21,6 +21,7 @@ import com.example.qsr.fav_deal.activities.TypeActivity;
 import com.example.qsr.fav_deal.base.BaseActivity;
 import com.example.qsr.fav_deal.bean.GridViewItem;
 import com.example.qsr.fav_deal.bean.MessageEvent;
+import com.example.qsr.fav_deal.bmobUtil.MesEventForBmob;
 import com.example.qsr.fav_deal.fragments.CartFragment;
 import com.example.qsr.fav_deal.fragments.CenterFragment;
 import com.example.qsr.fav_deal.fragments.DeliverFragment;
@@ -28,6 +29,7 @@ import com.example.qsr.fav_deal.fragments.HomePageFragment;
 import com.example.qsr.fav_deal.globle.AppConstants;
 import com.example.qsr.fav_deal.recycler.adapter.SlidingGridViewAdapter;
 import com.example.qsr.fav_deal.ui.IconFontTextView;
+import com.example.qsr.fav_deal.utils.LogUtil;
 import com.example.qsr.fav_deal.utils.MySPUtil;
 import com.example.qsr.fav_deal.utils.UIUtils;
 import com.yancy.imageselector.ImageSelector;
@@ -99,6 +101,7 @@ public class MainActivity extends BaseActivity {
     private Intent intent;
     private Bundle bundle = new Bundle();
     private String avatarUrl;
+    public static final int AVATAR = 99;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -176,10 +179,6 @@ public class MainActivity extends BaseActivity {
         if (event.getStateCode() == HomePageFragment.OPEN_SLIDEING) {
             drawerLayout.openDrawer(Gravity.LEFT);
         }
-    }
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        //    super.onRestoreInstanceState(savedInstanceState);
     }
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -317,6 +316,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.MyLog_e(this,"回来了！！！！！！");
         //判断头像返回的值
         if (requestCode == ImageSelector.IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             // Get Image Path List
@@ -328,7 +328,8 @@ public class MainActivity extends BaseActivity {
             //设置头像预览
             if (avatarUrl != null) {
                 //发送数据到fragment
-                MessageEvent event = new MessageEvent();
+                MesEventForBmob event = new MesEventForBmob();
+                event.setStateCode(AVATAR);
                 event.setString(avatarUrl);
                 EventBus.getDefault().post(event);
             }

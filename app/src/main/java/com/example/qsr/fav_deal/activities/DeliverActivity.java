@@ -7,12 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qsr.fav_deal.R;
 import com.example.qsr.fav_deal.bean.Order;
 import com.example.qsr.fav_deal.bmobUtil.MesEventForBmob;
 import com.example.qsr.fav_deal.bmobUtil.OrderTools;
 import com.example.qsr.fav_deal.bmobUtil.bean.BmobOrder;
+import com.example.qsr.fav_deal.recycler.OnEditOrDeleteListener;
 import com.example.qsr.fav_deal.recycler.adapter.OrderListAdapter;
 import com.example.qsr.fav_deal.utils.LogUtil;
 
@@ -49,6 +51,22 @@ public class DeliverActivity extends AppCompatActivity {
         orderList = new ArrayList<Order>();
         tRight.setVisibility(View.GONE);
         adapter = new OrderListAdapter(this,orderList);
+        adapter.setOnEditOrDeleteListener(new OnEditOrDeleteListener() {
+            @Override
+            public void onDelete(int position) {
+
+            }
+
+            @Override
+            public void onEdit(int position) {
+
+            }
+
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(DeliverActivity.this,orderList.get(position).toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DeliverActivity.this, LinearLayoutManager.VERTICAL, false);
         deliverRecycler.setLayoutManager(linearLayoutManager);
         deliverRecycler.setAdapter(adapter);
