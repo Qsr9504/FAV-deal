@@ -33,6 +33,8 @@ public abstract class BaseActivity extends FragmentActivity{
     protected Bundle activity_bundle;//用于传递数据使用
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        //透到状态栏
+        getWindow().addFlags(67108864);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
