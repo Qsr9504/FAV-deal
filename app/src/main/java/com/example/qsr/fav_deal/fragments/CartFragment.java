@@ -130,7 +130,6 @@ public class CartFragment extends BaseFragment {
             }
         });
         initD();//用于没有网络的时候死数据
-
     }
 
     /**
@@ -161,7 +160,6 @@ public class CartFragment extends BaseFragment {
 
     @Override
     protected void initTitle() {
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

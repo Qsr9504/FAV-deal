@@ -72,11 +72,12 @@ public class HomeFruitFragment extends BaseFragment {
     protected void initData(String content, View successView) {
         LogUtil.MyLog_e(getContext(), "---***" + "进来了oncreat");
         ButterKnife.bind(this, successView);
-        EventBus.getDefault().register(this);
         goodsTools = GoodsTools.getInstance(getContext());
         LogUtil.MyLog_e(getContext(), content);
-        if (goodsList == null)
+        EventBus.getDefault().register(this);
+        if (goodsList == null) {
             initData();//用于没有网络的时候死数据
+        }
         refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
         //下拉刷新监听
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -153,5 +154,6 @@ public class HomeFruitFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 }
