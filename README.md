@@ -98,7 +98,7 @@ PackageManager manager = context.getPackageManager();
   3.计算当前购物车的总价，以及优惠的价格，（用户默认为会员）
   4.一键清空购物车操作
   5.提交订单时二次用户是否登陆的验证
-  6.购物车缓存在本地
+  6.购物车缓存在本地，退出app，再登入还是会有的
   ```
 ## 第七部分：生成订单，选取该用户的收货地址，并确认信息
 ![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/生成订单.gif)
