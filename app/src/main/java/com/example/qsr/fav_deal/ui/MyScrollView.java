@@ -39,6 +39,7 @@ public class MyScrollView extends ScrollView {
 
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
         int childCount = getChildCount();
         if(childCount > 0){
             //如果内部有很多的子控件，那么要操作的子控件确定为ScrollView中第一个
