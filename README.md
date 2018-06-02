@@ -1,6 +1,6 @@
 # FAV-deal
 
-##本次项目使用的框架有：
+## 本次项目使用的框架有：
   ```java 
   1.图片加载
     - picasso 
@@ -43,7 +43,7 @@
   3.当不开启版本检测时，spalsh页面默认三秒自动进入，如果手动点击屏幕，会立即进入软件主界面（有版本更新执行，将封死点击屏幕快速进入）
 ```
   
-####获取当前版本号：
+#### 获取当前版本号：
 ```java 
 PackageManager manager = context.getPackageManager();
         PackageInfo info = null;
@@ -119,7 +119,7 @@ PackageManager manager = context.getPackageManager();
   2.bmob上传图片的一些操作封装
   ```
   
-##第十部份：用户反馈
+## 第十部份：用户反馈
 ![image](https://github.com/Qsr9504/FAV-deal/blob/master/gif演示图/反馈.gif)
 
 有做收集程序崩溃信息的接口，捕获各种导致程序崩溃的自定义文件。
